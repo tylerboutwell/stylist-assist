@@ -1,7 +1,8 @@
 from django.contrib.auth.models import User
 from rest_framework import permissions, viewsets
 
-from .serializers import UserSerializer
+from .models import Post
+from .serializers import UserSerializer, PostSerializer
 
 
 class UserViewSet(viewsets.ModelViewSet):
@@ -11,4 +12,9 @@ class UserViewSet(viewsets.ModelViewSet):
 
     queryset = User.objects.all().order_by("-date_joined")
     serializer_class = UserSerializer
+    permission_classes = [permissions.IsAuthenticated]
+
+class PostViewSet(viewsets.ModelViewSet):
+    queryset = Post.objects.all()
+    serializer_class = PostSerializer
     permission_classes = [permissions.IsAuthenticated]
