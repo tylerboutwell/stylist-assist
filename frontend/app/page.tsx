@@ -1,17 +1,10 @@
+import Navbar from "@/app/components/Navbar";
+
 export default function Home() {
   return (
     <main className="min-h-screen bg-neutral-950 text-white flex flex-col">
-      {/* NAVBAR */}
-      <nav className="flex justify-between items-center px-8 py-4 border-b border-neutral-800">
-        <h1 className="text-xl font-semibold tracking-tight">
-          StylistAssist
-        </h1>
-        <div className="space-x-6 text-sm text-neutral-300">
-          <a href="#" className="hover:text-white transition">Features</a>
-          <a href="#" className="hover:text-white transition">Pricing</a>
-          <a href="#" className="hover:text-white transition">Login</a>
-        </div>
-      </nav>
+      {/* use navbar from components */}
+      <Navbar/>
 
       {/* HERO SECTION */}
       <section className="flex flex-1 flex-col justify-center items-center text-center px-6">

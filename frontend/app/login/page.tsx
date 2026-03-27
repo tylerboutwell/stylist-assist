@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import Navbar from "@/app/components/Navbar";
 
 export default function LoginPage() {
   const [email, setEmail] = useState("");
@@ -33,7 +34,7 @@ export default function LoginPage() {
         localStorage.setItem("refreshToken", data.refresh);
 
         // Redirect to dashboard or AI page
-        router.push("/generate");
+        router.push("/");
       } else {
         setError(data.detail || "Login failed");
       }
@@ -46,48 +47,53 @@ export default function LoginPage() {
   };
 
   return (
-    <main className="min-h-screen flex items-center justify-center bg-neutral-950 text-white px-4">
-      <div className="w-full max-w-md p-8 bg-neutral-900 rounded-2xl shadow-md">
-        <h2 className="text-2xl font-semibold mb-6 text-center">Login</h2>
+      <main className="min-h-screen bg-neutral-950 text-white flex flex-col">
+        <Navbar/>
 
-        {error && (
-          <div className="bg-red-600 text-white p-2 rounded mb-4 text-sm text-center">
-            {error}
+        {/* Center the login card */}
+        <div className="flex flex-1 items-center justify-center px-4">
+          <div className="w-full max-w-md p-8 bg-neutral-900 rounded-xl">
+            <h2 className="text-2xl font-semibold mb-6 text-center">Login</h2>
+
+            {error && (
+                <div className="bg-red-600 p-2 rounded mb-4 text-center text-sm">
+                  {error}
+                </div>
+            )}
+
+            <form className="flex flex-col gap-4" onSubmit={handleLogin}>
+              <input
+                  type="email"
+                  placeholder="Email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  className="p-3 rounded bg-neutral-800 border border-neutral-700"
+                  required
+              />
+
+              <input
+                  type="password"
+                  placeholder="Password"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  className="p-3 rounded bg-neutral-800 border border-neutral-700"
+                  required
+              />
+
+              <button
+                  type="submit"
+                  className="p-3 rounded bg-white text-black font-medium hover:bg-neutral-200"
+                  disabled={loading}
+              >
+                {loading ? "Logging in..." : "Login"}
+              </button>
+            </form>
+
+            <p className="text-center text-neutral-400 mt-4 text-sm">
+              Don’t have an account? <a href="/register" className="underline text-white">Sign up</a>
+            </p>
           </div>
-        )}
-
-        <form className="flex flex-col gap-4" onSubmit={handleLogin}>
-          <input
-            type="email"
-            placeholder="Email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            className="p-3 rounded-xl bg-neutral-800 text-white border border-neutral-700 focus:outline-none focus:border-white"
-            required
-          />
-
-          <input
-            type="password"
-            placeholder="Password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            className="p-3 rounded-xl bg-neutral-800 text-white border border-neutral-700 focus:outline-none focus:border-white"
-            required
-          />
-
-          <button
-            type="submit"
-            className="bg-white text-black py-3 rounded-xl font-medium hover:bg-neutral-200 transition"
-            disabled={loading}
-          >
-            {loading ? "Logging in..." : "Login"}
-          </button>
-        </form>
-
-        <p className="text-center text-neutral-400 mt-4 text-sm">
-          Don’t have an account? <a href="/register" className="text-white underline">Sign up</a>
-        </p>
-      </div>
-    </main>
+        </div>
+      </main>
   );
 }
