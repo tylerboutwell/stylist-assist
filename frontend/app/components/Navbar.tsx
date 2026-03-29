@@ -13,7 +13,7 @@ export default function Navbar() {
         StylistAssist
       </Link>
       <div className="space-x-6 text-sm text-neutral-300">
-        <Link href="#" className="hover:text-white transition">AI Content</Link>
+        <Link href="/createpost" className="hover:text-white transition">AI Content</Link>
         {isLoggedIn ? (
           <button
             onClick={() => {
