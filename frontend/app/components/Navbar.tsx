@@ -21,7 +21,7 @@ export default function Navbar() {
               localStorage.removeItem("refreshToken");
               window.location.reload(); // quick refresh
             }}
-            className="hover:text-white transition"
+            className="hover:text-white transition cursor-pointer"
           >
             Logout
           </button>
