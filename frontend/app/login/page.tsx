@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 import Navbar from "@/app/components/Navbar";
 
 export default function LoginPage() {
-  const [email, setEmail] = useState("");
+  const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
@@ -23,7 +23,7 @@ export default function LoginPage() {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ email, password }),
+        body: JSON.stringify({ username, password }),
       });
 
       const data = await res.json();
@@ -63,10 +63,10 @@ export default function LoginPage() {
 
             <form className="flex flex-col gap-4" onSubmit={handleLogin}>
               <input
-                  type="email"
-                  placeholder="Email"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
+                  type="text"
+                  placeholder="Username"
+                  value={username}
+                  onChange={(e) => setUsername(e.target.value)}
                   className="p-3 rounded bg-neutral-800 border border-neutral-700"
                   required
               />
