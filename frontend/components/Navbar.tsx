@@ -1,11 +1,15 @@
 "use client";
 
 import Link from "next/link";
+import {useEffect, useState} from "react";
 
 export default function Navbar() {
-    const isLoggedIn =
-    typeof window !== "undefined" &&
-    localStorage.getItem("accessToken");
+    const [isLoggedIn, setIsLoggedIn] = useState(false);
+    useEffect(() => {
+      const token = localStorage.getItem("accessToken");
+
+          setIsLoggedIn(!!token);
+        }, []);
 
   return (
     <nav className="flex justify-between items-center px-8 py-4 border-b border-neutral-800 bg-neutral-950 text-white">
