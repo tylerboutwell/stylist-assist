@@ -29,22 +29,33 @@ class PostViewSet(viewsets.ModelViewSet):
     def perform_create(self, serializer):
         user = self.request.user
         image = self.request.FILES.get("image")
+        prompt = self.request.data.get("prompt")
         content_type = image.content_type  # e.g. "image/png", "image/jpeg"
         image_bytes = image.read()
         encoded_image = base64.b64encode(image_bytes).decode("utf-8")
+
+        content_list = [
+                    {"type": "input_text", "text": "Generate a social media caption and hashtags for this image."},
+                    {
+                        "type": "input_image",
+                        "image_url": f"data:{content_type};base64,{encoded_image}",
+                    },
+                ]
+
+        if prompt:
+            content_list.append(
+                {
+                    "type": "input_text",
+                    "text": f"Additional user instructions: {self.request.data.get("prompt", "")}"
+                },
+            )
 
         response = client.responses.create(
             model="gpt-4.1-mini",
             input=[
                 {
                     "role": "user",
-                    "content": [
-                        {"type": "input_text", "text": "Generate a social media caption and hashtags for this image."},
-                        {
-                            "type": "input_image",
-                            "image_url": f"data:{content_type};base64,{encoded_image}",
-                        },
-                    ],
+                    "content": content_list
                 }
             ],
         )

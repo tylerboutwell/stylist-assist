@@ -2,7 +2,6 @@
 
 import {useContext, useEffect, useState} from "react";
 import Navbar from "@/components/Navbar";
-import {router} from "next/client";
 import {useRouter} from "next/navigation";
 import { apiFetch } from "@/lib/api";
 import AuthContext from "@/context/AuthContext";
@@ -12,15 +11,26 @@ export default function CreatePostPage() {
   const [prompt, setPrompt] = useState("");
   const [loading, setLoading] = useState(false);
   const [aiResponse, setAiResponse] = useState("");
+  const [previewUrl, setPreviewUrl] = useState<string | null>(null);
   const router = useRouter();
-  const {user} = useContext(AuthContext)
+  const {user, loading: authLoad} = useContext(AuthContext)
 
   useEffect(() => {
-    if (!user) {
-    return router.push('/login')}
-  }, [user, router])
+    if (!user && !authLoad) {
+      router.push('/login')}
+  }, [user, authLoad, router])
 
-    if (!user) {
+  useEffect(() => {
+    if (!image) {
+      setPreviewUrl(null);
+      return;
+    }
+    const objUrl = URL.createObjectURL(image);
+    setPreviewUrl(objUrl);
+    return () => URL.revokeObjectURL(objUrl);
+  }, [image]);
+
+  if (!user) {
       return null
     }
 
@@ -35,7 +45,7 @@ export default function CreatePostPage() {
     try {
     const formData = new FormData();
     formData.append("image", image);
-    const token = localStorage.getItem("accessToken");
+    formData.append("prompt", prompt)
 
     const res = await apiFetch("http://localhost:8000/api/posts/", {
       method: "POST",
