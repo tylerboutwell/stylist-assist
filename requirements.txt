@@ -2,3 +2,5 @@ djangorestframework
 pillow
 django-cors-headers
 djangorestframework-simplejwt
+openai
+python-dotenv

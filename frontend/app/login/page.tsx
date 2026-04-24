@@ -1,49 +1,29 @@
 "use client";
 
-import { useState } from "react";
+import {useContext, useState} from "react";
 import { useRouter } from "next/navigation";
-import Navbar from "@/app/components/Navbar";
+import Navbar from "@/components/Navbar";
+import AuthContext from "@/context/AuthContext";
 
 export default function LoginPage() {
+  const {login} = useContext(AuthContext)
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
-
   const router = useRouter();
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
     setError("");
-    setLoading(true);
 
-    try {
-      const res = await fetch("http://localhost:8000/api/token/", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ username, password }),
-      });
+    const result = await login({ username, password });
 
-      const data = await res.json();
-
-      if (res.ok) {
-        // Save tokens (localStorage is simple; you can later use cookies or context)
-        localStorage.setItem("accessToken", data.access);
-        localStorage.setItem("refreshToken", data.refresh);
-
-        // Redirect to dashboard or AI page
-        router.push("/");
-      } else {
-        setError(data.detail || "Login failed");
-      }
-    } catch (err) {
-      console.error(err);
-      setError("An error occurred. Try again.");
+    if (result.success) {
+      router.push("/");
+    } else {
+      setError(result.success || "Login failed");
     }
-
-    setLoading(false);
   };
 
   return (

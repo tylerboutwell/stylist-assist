@@ -1,13 +1,28 @@
 "use client";
 
-import { useState } from "react";
-import Navbar from "@/app/components/Navbar";
+import {useContext, useEffect, useState} from "react";
+import Navbar from "@/components/Navbar";
+import {router} from "next/client";
+import {useRouter} from "next/navigation";
+import { apiFetch } from "@/lib/api";
+import AuthContext from "@/context/AuthContext";
 
 export default function CreatePostPage() {
   const [image, setImage] = useState<File | null>(null);
   const [prompt, setPrompt] = useState("");
   const [loading, setLoading] = useState(false);
   const [aiResponse, setAiResponse] = useState("");
+  const router = useRouter();
+  const {user} = useContext(AuthContext)
+
+  useEffect(() => {
+    if (!user) {
+    return router.push('/login')}
+  }, [user, router])
+
+    if (!user) {
+      return null
+    }
 
   const handleSubmit = async () => {
     if (!image) {
@@ -17,13 +32,30 @@ export default function CreatePostPage() {
 
     setLoading(true);
 
-    // Fake AI response for now
-    setTimeout(() => {
-      setAiResponse(
-        "✨ Your AI-generated caption will appear here! Add hashtags, a fun description, and a call-to-action for your post."
-      );
-      setLoading(false);
-    }, 1000);
+    try {
+    const formData = new FormData();
+    formData.append("image", image);
+    const token = localStorage.getItem("accessToken");
+
+    const res = await apiFetch("http://localhost:8000/api/posts/", {
+      method: "POST",
+      body: formData,
+    });
+
+    const data = await res.json();
+
+    if (!res.ok) {
+      console.error("Bad request response:", data);
+      setAiResponse("Error uploading image.");
+      return;
+    }
+    setAiResponse(data.caption);
+  } catch (err) {
+    console.error(err);
+    setAiResponse("Error generating response.");
+  } finally {
+    setLoading(false);
+  }
   };
 
   return (

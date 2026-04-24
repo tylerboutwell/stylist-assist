@@ -1,14 +1,17 @@
 "use client";
 
 import Link from "next/link";
-import {useEffect, useState} from "react";
+import {useContext, useEffect, useState} from "react";
+import AuthContext from "@/context/AuthContext";
 
 export default function Navbar() {
     const [isLoggedIn, setIsLoggedIn] = useState(false);
+    const authContext = useContext(AuthContext);
+
     useEffect(() => {
       const token = localStorage.getItem("accessToken");
 
-          setIsLoggedIn(!!token);
+          setIsLoggedIn(!!authContext.user);
         }, []);
 
   return (
