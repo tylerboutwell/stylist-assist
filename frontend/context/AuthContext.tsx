@@ -17,6 +17,13 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const [loading, setLoading] = useState(true);
 
   const checkUser = async () => {
+    const token = localStorage.getItem("accessToken");
+
+    if (!token) {
+      setUser(null);
+      setLoading(false);
+      return;
+    }
     try {
       const res = await apiFetch("http://localhost:8000/api/users/me/");
 
@@ -62,13 +69,14 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   };
 
   const logout = () => {
-    localStorage.removeItem("access");
+    localStorage.removeItem("accessToken");
+    localStorage.removeItem("refreshToken")
     setUser(null);
   };
 
   useEffect(() => {
     checkUser();
-  }, [checkUser]);
+  }, []);
 
   return (
     <AuthContext value={{ user, loading, login, logout }}>

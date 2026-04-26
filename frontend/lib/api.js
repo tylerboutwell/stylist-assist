@@ -12,23 +12,23 @@ export async function apiFetch(url, options = {}) {
     },
   });
 
-  if (res.status === 401) {
-    if (!isRefreshing) {
-      isRefreshing = true;
-      refreshPromise = refreshToken();
+    if (res.status === 401) {
+      if (!isRefreshing) {
+        isRefreshing = true;
+        refreshPromise = refreshToken();
+      }
+
+    let success;
+
+    try {
+      success = await refreshPromise;
+    } finally {
+      isRefreshing = false;
     }
 
-  let success;
-
-  try {
-    success = await refreshPromise;
-  } finally {
-    isRefreshing = false;
-  }
-
-  if (!success) {
-    throw new Error("Refresh failed");
-  }
+    if (!success) {
+      throw new Error("Refresh failed");
+    }
 
     const newToken = localStorage.getItem("accessToken");
 
