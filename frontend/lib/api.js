@@ -18,8 +18,17 @@ export async function apiFetch(url, options = {}) {
       refreshPromise = refreshToken();
     }
 
-    await refreshPromise;
+  let success;
+
+  try {
+    success = await refreshPromise;
+  } finally {
     isRefreshing = false;
+  }
+
+  if (!success) {
+    throw new Error("Refresh failed");
+  }
 
     const newToken = localStorage.getItem("accessToken");
 
@@ -37,6 +46,10 @@ export async function apiFetch(url, options = {}) {
 
 async function refreshToken() {
   const refresh = localStorage.getItem("refreshToken");
+  if (!refresh) {
+    logout();
+    return false;
+  }
 
   const res = await fetch("http://localhost:8000/api/token/refresh/", {
     method: "POST",
@@ -48,11 +61,12 @@ async function refreshToken() {
 
   if (!res.ok) {
     logout();
-    return;
+    return false;
   }
 
   const data = await res.json();
   localStorage.setItem("accessToken", data.access);
+  return true
 }
 
 function logout() {

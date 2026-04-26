@@ -17,24 +17,17 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const [loading, setLoading] = useState(true);
 
   const checkUser = async () => {
-    const token = localStorage.getItem("accessToken"); // Implement cookies here later
-
-    if (!token) {
-      setUser(null)
-      setLoading(false);
-      return;
-    }
-
     try {
-      const res = await apiFetch("http://localhost:8000/api/users/me/", {
-            headers: {Authorization: `Bearer ${token}`},
-          });
+      const res = await apiFetch("http://localhost:8000/api/users/me/");
 
       if (res.ok) {
         const userData = await res.json();
         setUser(userData);
       } else {
-        localStorage.removeItem("access"); // Clean up bad tokens
+        //Clean up bad tokens
+        localStorage.removeItem("accessToken");
+        localStorage.removeItem("refreshToken");
+        setUser(null)
       }
     } catch (err) {
       console.error("Auth check failed", err);
