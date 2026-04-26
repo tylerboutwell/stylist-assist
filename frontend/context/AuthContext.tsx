@@ -1,6 +1,7 @@
 "use client";
 
 import { createContext, useContext, useEffect, useState } from "react";
+import {apiFetch} from "@/lib/api";
 
 const AuthContext = createContext({
   user: null,
@@ -25,9 +26,9 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     }
 
     try {
-      const res = await fetch("http://localhost:8000/api/users/me/", {
-        headers: { Authorization: `Bearer ${token}` },
-      });
+      const res = await apiFetch("http://localhost:8000/api/users/me/", {
+            headers: {Authorization: `Bearer ${token}`},
+          });
 
       if (res.ok) {
         const userData = await res.json();
