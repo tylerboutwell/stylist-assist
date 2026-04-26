@@ -29,26 +29,32 @@ export default function Home() {
       {/* FEATURES */}
       <section className="px-8 py-16 border-t border-neutral-800">
         <div className="max-w-6xl mx-auto grid md:grid-cols-3 gap-8">
-          <Link href="/createpost">
-            <div className="bg-neutral-900 p-6 rounded-2xl">
-              <h3 className="text-lg font-semibold">AI Content</h3>
+          <Link href="/createpost" className="group">
+            <div className="bg-neutral-900 p-6 rounded-2xl border border-transparent group-hover:border-neutral-700 transition-all duration-200 h-full">
+              <h3 className="text-lg font-semibold group-hover:text-blue-400 transition-colors">Smart Captions</h3>
               <p className="text-neutral-400 mt-2 text-sm">
-                Generate Instagram captions, hashtags, and post ideas instantly.
+                Turn your work into viral content with AI-generated captions and trending hashtags.
               </p>
             </div>
           </Link>
 
-          <div className="bg-neutral-900 p-6 rounded-2xl">
-            <h3 className="text-lg font-semibold">Booking & Records</h3>
+          <div className="bg-neutral-900 p-6 rounded-2xl border border-transparent opacity-80 cursor-not-allowed">
+            <div className="flex items-center gap-2">
+              <h3 className="text-lg font-semibold">Booking & Records</h3>
+              <span className="text-[10px] bg-blue-500/20 text-blue-400 px-2 py-0.5 rounded-full uppercase">Soon</span>
+            </div>
             <p className="text-neutral-400 mt-2 text-sm">
-              Manage appointments and keep detailed color formulas and history for every client.
+              Seamlessly book clients and save their custom color formulas in one secure place.
             </p>
           </div>
 
-          <div className="bg-neutral-900 p-6 rounded-2xl">
-            <h3 className="text-lg font-semibold">Business Growth</h3>
-            <p className="text-neutral-400 mt-2 text-sm">
-              Tools to help stylists grow their brand and income.
+          <div className="bg-neutral-900 p-6 rounded-2xl border border-transparent opacity-80 cursor-not-allowed">
+              <div className="flex items-center gap-2">
+                <h3 className="text-lg font-semibold">Digital Consults</h3>
+                <span className="text-[10px] bg-blue-500/20 text-blue-400 px-2 py-0.5 rounded-full uppercase">Soon</span>
+              </div>
+              <p className="text-neutral-400 mt-2 text-sm">
+              Send custom intake forms to new clients to save time and prevent surprises.
             </p>
           </div>
 
