@@ -1,4 +1,5 @@
 import Navbar from "@/components/Navbar";
+import Link from "next/link";
 
 export default function Home() {
   return (
@@ -26,32 +27,34 @@ export default function Home() {
       </section>
 
       {/* FEATURES */}
-      <section className="px-8 py-16 border-t border-neutral-800">
-        <div className="max-w-6xl mx-auto grid md:grid-cols-3 gap-8">
+      <Link href="/createpost">
+        <section className="px-8 py-16 border-t border-neutral-800">
+          <div className="max-w-6xl mx-auto grid md:grid-cols-3 gap-8">
 
-          <div className="bg-neutral-900 p-6 rounded-2xl">
-            <h3 className="text-lg font-semibold">AI Content</h3>
-            <p className="text-neutral-400 mt-2 text-sm">
-              Generate Instagram captions, hashtags, and post ideas instantly.
-            </p>
+            <div className="bg-neutral-900 p-6 rounded-2xl">
+              <h3 className="text-lg font-semibold">AI Content</h3>
+              <p className="text-neutral-400 mt-2 text-sm">
+                Generate Instagram captions, hashtags, and post ideas instantly.
+              </p>
+            </div>
+
+            <div className="bg-neutral-900 p-6 rounded-2xl">
+              <h3 className="text-lg font-semibold">Client Tracking</h3>
+              <p className="text-neutral-400 mt-2 text-sm">
+                Keep notes, preferences, and history for every client.
+              </p>
+            </div>
+
+            <div className="bg-neutral-900 p-6 rounded-2xl">
+              <h3 className="text-lg font-semibold">Business Growth</h3>
+              <p className="text-neutral-400 mt-2 text-sm">
+                Tools to help stylists grow their brand and income.
+              </p>
+            </div>
+
           </div>
-
-          <div className="bg-neutral-900 p-6 rounded-2xl">
-            <h3 className="text-lg font-semibold">Client Tracking</h3>
-            <p className="text-neutral-400 mt-2 text-sm">
-              Keep notes, preferences, and history for every client.
-            </p>
-          </div>
-
-          <div className="bg-neutral-900 p-6 rounded-2xl">
-            <h3 className="text-lg font-semibold">Business Growth</h3>
-            <p className="text-neutral-400 mt-2 text-sm">
-              Tools to help stylists grow their brand and income.
-            </p>
-          </div>
-
-        </div>
-      </section>
+        </section>
+      </Link>
 
       {/* FOOTER */}
       <footer className="text-center text-neutral-500 text-sm py-6 border-t border-neutral-800">
