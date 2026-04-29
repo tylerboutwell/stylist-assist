@@ -12,7 +12,7 @@ import base64
 
 class UserViewSet(viewsets.ModelViewSet):
     queryset = User.objects.all()
-    serializer_class = UserSerializer()
+    serializer_class = UserSerializer
     permission_classes = [permissions.IsAuthenticated]
 
     @action(detail=False, methods=['get'], permission_classes=[permissions.IsAuthenticated])
