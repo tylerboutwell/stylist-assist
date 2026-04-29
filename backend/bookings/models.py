@@ -13,7 +13,6 @@ class Booking(models.Model):
     stylist = models.ForeignKey(User, on_delete=models.CASCADE, related_name='bookings')
     client = models.ForeignKey("Client", on_delete=models.CASCADE, related_name="bookings")
     service = models.ForeignKey("Service", on_delete=models.PROTECT, related_name="bookings")
-
     booked_price = models.DecimalField(max_digits=7, decimal_places=2)
     start_time = models.DateTimeField()
     end_time = models.DateTimeField()
