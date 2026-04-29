@@ -6,11 +6,15 @@ from rest_framework_simplejwt.views import (
     TokenRefreshView,
 )
 from api import views
+from bookings import views as bookings_views
 from api.models import Post
 
 router = routers.DefaultRouter()
 router.register(r"users", views.UserViewSet)
 router.register(r"posts", views.PostViewSet)
+router.register(r"bookings", bookings_views.BookingViewSet)
+router.register(r"clients", bookings_views.ClientViewSet)
+router.register(r"services", bookings_views.ServiceViewSet)
 admin.site.register(Post)
 
 # Wire up our API using automatic URL routing.
