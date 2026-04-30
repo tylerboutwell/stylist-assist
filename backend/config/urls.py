@@ -12,9 +12,9 @@ from api.models import Post
 router = routers.DefaultRouter()
 router.register(r"users", views.UserViewSet)
 router.register(r"posts", views.PostViewSet)
-router.register(r"bookings", bookings_views.BookingViewSet)
-router.register(r"clients", bookings_views.ClientViewSet)
-router.register(r"services", bookings_views.ServiceViewSet)
+router.register(r"bookings", bookings_views.BookingViewSet, basename="booking")
+router.register(r"clients", bookings_views.ClientViewSet, basename="client")
+router.register(r"services", bookings_views.ServiceViewSet, basename="service")
 admin.site.register(Post)
 
 # Wire up our API using automatic URL routing.
