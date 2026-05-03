@@ -2,10 +2,14 @@
 
 import React, { useEffect, useState } from "react";
 import { Scissors, Plus } from "lucide-react";
+import {apiFetch} from "@/lib/api";
 
 type Service = {
   id: number;
   name: string;
+  description: string;
+  base_price: number;
+  duration: number;
 };
 
 type Props = {
@@ -22,13 +26,14 @@ export default function ServiceSelector({
 
   const [newService, setNewService] = useState({
     name: "",
-    price: "",
-    duration_minutes: "",
+    base_price: "",
+    duration: "",
+    description:"",
   });
 
   useEffect(() => {
     const fetchServices = async () => {
-      const res = await fetch("/api/services/");
+      const res = await apiFetch("http://localhost:8000/booking/services/");
       const data = await res.json();
       setServices(data);
     };
@@ -37,16 +42,12 @@ export default function ServiceSelector({
   }, []);
 
   const createService = async () => {
-    const res = await fetch("/api/services/", {
+    const res = await apiFetch("http://localhost:8000/booking/services/", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({
-        ...newService,
-        price: parseFloat(newService.price),
-        duration_minutes: Number(newService.duration_minutes),
-      }),
+      body: JSON.stringify(newService)
     });
 
     if (!res.ok) {
@@ -62,13 +63,17 @@ export default function ServiceSelector({
 
     setNewService({
       name: "",
-      price: "",
-      duration_minutes: "",
+      description: "",
+      base_price: "",
+      duration: "",
     });
   };
 
   return (
     <div className="space-y-4">
+      {services.map((Service) => (
+          <div>{Service.name} {Service.description} {Service.base_price}</div>
+      ))}
       <label className="block text-sm font-medium">Service</label>
 
       <div className="flex items-center gap-3 bg-black border border-neutral-800 rounded-2xl px-4 py-3">
@@ -76,11 +81,11 @@ export default function ServiceSelector({
         <select
           value={selectedService ?? ""}
           onChange={(e) => onSelect(Number(e.target.value))}
-          className="w-full bg-transparent outline-none text-white"
+          className="w-full bg-black text-white p-2 rounded outline-none"
         >
-          <option value="">Select a service</option>
+          <option value="" className='bg-black text-white'>Select a service</option>
           {services.map((service) => (
-            <option key={service.id} value={service.id}>
+            <option key={service.id} value={service.id} className='bg-black text-white'>
               {service.name}
             </option>
           ))}
@@ -108,21 +113,30 @@ export default function ServiceSelector({
           />
 
           <input
-            placeholder="Price"
-            value={newService.price}
+            placeholder="Description"
+            value={newService.description}
             onChange={(e) =>
-              setNewService({ ...newService, price: e.target.value })
+              setNewService({ ...newService, description: e.target.value })
+            }
+            className="w-full p-3 rounded-xl bg-neutral-900 border border-neutral-700"
+            />
+
+          <input
+            placeholder="Price"
+            value={newService.base_price}
+            onChange={(e) =>
+              setNewService({ ...newService, base_price: e.target.value })
             }
             className="w-full p-3 rounded-xl bg-neutral-900 border border-neutral-700"
           />
 
           <input
             placeholder="Duration (minutes)"
-            value={newService.duration_minutes}
+            value={newService.duration}
             onChange={(e) =>
               setNewService({
                 ...newService,
-                duration_minutes: e.target.value,
+                duration: e.target.value,
               })
             }
             className="w-full p-3 rounded-xl bg-neutral-900 border border-neutral-700"

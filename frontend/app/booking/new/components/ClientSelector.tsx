@@ -45,7 +45,6 @@ export default function ClientSelector({
   }, []);
 
   const createClient = async () => {
-
     const res = await apiFetch("http://localhost:8000/booking/clients/", {
       method: "POST",
       headers: {

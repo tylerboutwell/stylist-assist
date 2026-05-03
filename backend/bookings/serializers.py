@@ -18,5 +18,5 @@ class ClientSerializer(serializers.HyperlinkedModelSerializer):
 class ServiceSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Service
-        fields = ['id', 'description', 'base_price', 'duration', 'stylist']
+        fields = ['id', 'name', 'description', 'base_price', 'duration', 'stylist']
         read_only_fields = ["stylist"]
