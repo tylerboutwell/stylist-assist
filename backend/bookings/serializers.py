@@ -5,7 +5,8 @@ from bookings.models import Booking, Client, Service
 class BookingSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Booking
-        fields = "__all__"
+        fields = ['id', 'stylist', 'client', 'service', 'booked_price', 'start_time', 'end_time', 'status', 'notes',
+                  'created_at', 'updated_at']
         read_only_fields = ["stylist", "created_at", "updated_at"]
 
 class ClientSerializer(serializers.HyperlinkedModelSerializer):
@@ -17,5 +18,5 @@ class ClientSerializer(serializers.HyperlinkedModelSerializer):
 class ServiceSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Service
-        fields = "__all__"
+        fields = ['id', 'description', 'base_price', 'duration', 'stylist']
         read_only_fields = ["stylist"]
