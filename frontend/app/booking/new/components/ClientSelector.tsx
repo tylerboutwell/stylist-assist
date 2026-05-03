@@ -2,10 +2,16 @@
 
 import React, { useEffect, useState } from "react";
 import { User, Plus } from "lucide-react";
+import {apiFetch} from "@/lib/api";
+import {bgBlack} from "next/dist/lib/picocolors";
 
 type Client = {
   id: number;
-  full_name: string;
+  first_name: string;
+  last_name: string;
+  phone_number: string;
+  email: string;
+  general_notes: string;
 };
 
 type Props = {
@@ -30,7 +36,7 @@ export default function ClientSelector({
 
   useEffect(() => {
     const fetchClients = async () => {
-      const res = await fetch("/booking/clients/");
+      const res = await apiFetch('http://localhost:8000/booking/clients/');
       const data = await res.json();
       setClients(data);
     };
@@ -39,13 +45,14 @@ export default function ClientSelector({
   }, []);
 
   const createClient = async () => {
-    const res = await fetch("/booking/clients/", {
+
+    const res = await apiFetch("http://localhost:8000/booking/clients/", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify(newClient),
-    });
+      body: JSON.stringify(newClient)
+    })
 
     if (!res.ok) {
       alert("Failed to create client");
@@ -76,12 +83,12 @@ export default function ClientSelector({
         <select
           value={selectedClient ?? ""}
           onChange={(e) => onSelect(Number(e.target.value))}
-          className="w-full bg-transparent outline-none text-white"
+          className="w-full bg-black text-white p-2 rounded outline-none"
         >
-          <option value="">Select a client</option>
+          <option value="" className="bg-black text-white">Select a client</option>
           {clients.map((client) => (
-            <option key={client.id} value={client.id}>
-              {client.full_name}
+            <option key={client.id} value={client.id} className="bg-black text-white">
+              {client.first_name} {client.last_name}
             </option>
           ))}
         </select>
@@ -97,33 +104,60 @@ export default function ClientSelector({
       </button>
 
       {showNewForm && (
-        <div className="space-y-3 p-4 bg-black border border-neutral-800 rounded-2xl">
-          <input
-            placeholder="First Name"
-            value={newClient.first_name}
-            onChange={(e) =>
-              setNewClient({ ...newClient, first_name: e.target.value })
-            }
-            className="w-full p-3 rounded-xl bg-neutral-900 border border-neutral-700"
-          />
+          <div className="space-y-3 p-4 bg-black border border-neutral-800 rounded-2xl">
+            <input
+                placeholder="First Name"
+                value={newClient.first_name}
+                onChange={(e) =>
+                    setNewClient({...newClient, first_name: e.target.value})
+                }
+                className="w-full p-3 rounded-xl bg-neutral-900 border border-neutral-700"
+            />
 
-          <input
-            placeholder="Last Name"
-            value={newClient.last_name}
-            onChange={(e) =>
-              setNewClient({ ...newClient, last_name: e.target.value })
-            }
-            className="w-full p-3 rounded-xl bg-neutral-900 border border-neutral-700"
-          />
+            <input
+                placeholder="Last Name"
+                value={newClient.last_name}
+                onChange={(e) =>
+                    setNewClient({...newClient, last_name: e.target.value})
+                }
+                className="w-full p-3 rounded-xl bg-neutral-900 border border-neutral-700"
+            />
 
-          <button
-            type="button"
-            onClick={createClient}
-            className="px-4 py-2 rounded-xl bg-white text-black font-semibold"
-          >
-            Save Client
-          </button>
-        </div>
+            <input
+                placeholder="Optional: Phone Number"
+                value={newClient.phone_number}
+                onChange={(e) =>
+                    setNewClient({...newClient, phone_number: e.target.value})
+                }
+                className="w-full p-3 rounded-xl bg-neutral-900 border border-neutral-700"
+            />
+
+            <input
+                placeholder="Optional: Email"
+                value={newClient.email}
+                onChange={(e) =>
+                    setNewClient({...newClient, email: e.target.value})
+                }
+                className="w-full p-3 rounded-xl bg-neutral-900 border border-neutral-700"
+            />
+
+            <textarea
+                placeholder="Notes"
+                value={newClient.general_notes}
+                onChange={(e) =>
+                    setNewClient({...newClient, general_notes: e.target.value})
+                }
+                className="w-full p-3 rounded-xl bg-neutral-900 border border-neutral-700"
+            />
+
+            <button
+                type="button"
+                onClick={createClient}
+                className="px-4 py-2 rounded-xl bg-white text-black font-semibold"
+            >
+              Save Client
+            </button>
+          </div>
       )}
     </div>
   );

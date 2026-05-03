@@ -12,9 +12,10 @@ from api.models import Post
 router = routers.DefaultRouter()
 router.register(r"users", views.UserViewSet)
 router.register(r"posts", views.PostViewSet)
-router.register(r"bookings", bookings_views.BookingViewSet, basename="booking")
-router.register(r"clients", bookings_views.ClientViewSet, basename="client")
-router.register(r"services", bookings_views.ServiceViewSet, basename="service")
+booking_router = routers.DefaultRouter()
+booking_router.register(r"bookings", bookings_views.BookingViewSet, basename="booking")
+booking_router.register(r"clients", bookings_views.ClientViewSet, basename="client")
+booking_router.register(r"services", bookings_views.ServiceViewSet, basename="service")
 admin.site.register(Post)
 
 # Wire up our API using automatic URL routing.
@@ -25,4 +26,5 @@ urlpatterns = [
     path("api-auth/", include("rest_framework.urls", namespace="rest_framework")),
     path('api/token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
     path('api/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
+    path('booking/', include(booking_router.urls)),
 ]

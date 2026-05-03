@@ -11,7 +11,7 @@ class BookingSerializer(serializers.HyperlinkedModelSerializer):
 class ClientSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Client
-        fields = "__all__"
+        fields = ['id', 'first_name', 'last_name', 'email', 'phone_number', 'general_notes', 'stylist']
         read_only_fields = ["stylist"]
 
 class ServiceSerializer(serializers.HyperlinkedModelSerializer):

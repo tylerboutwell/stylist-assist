@@ -54,7 +54,7 @@ class Client(models.Model):
     last_name = models.CharField(max_length=50)
     phone_number = models.CharField(max_length=15, blank=True, null=True)
     email = models.EmailField(blank=True, null=True)
-    general_notes = models.TextField(blank=True, help_text="Hair style, preferences, etc.")
+    general_notes = models.TextField(blank=True, null=True, help_text="Hair style, preferences, etc.")
     stylist = models.ForeignKey(User, on_delete=models.CASCADE, related_name="clients")
 
     def __str__(self):
