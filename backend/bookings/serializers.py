@@ -2,20 +2,23 @@ from django.contrib.auth.models import User
 from rest_framework import serializers
 from bookings.models import Booking, Client, Service
 
-class BookingSerializer(serializers.HyperlinkedModelSerializer):
+class BookingSerializer(serializers.ModelSerializer):
+    client_name = serializers.CharField(source='client.__str__', read_only=True)
+    service_name = serializers.CharField(source='service.name', read_only=True)
+
     class Meta:
         model = Booking
-        fields = ['id', 'stylist', 'client', 'service', 'booked_price', 'start_time', 'end_time', 'status', 'notes',
+        fields = ['id', 'stylist', 'client', 'client_name', 'service', 'service_name', 'booked_price', 'start_time', 'end_time', 'status', 'notes',
                   'created_at', 'updated_at']
         read_only_fields = ["stylist", "created_at", "updated_at"]
 
-class ClientSerializer(serializers.HyperlinkedModelSerializer):
+class ClientSerializer(serializers.ModelSerializer):
     class Meta:
         model = Client
         fields = ['id', 'first_name', 'last_name', 'email', 'phone_number', 'general_notes', 'stylist']
         read_only_fields = ["stylist"]
 
-class ServiceSerializer(serializers.HyperlinkedModelSerializer):
+class ServiceSerializer(serializers.ModelSerializer):
     class Meta:
         model = Service
         fields = ['id', 'name', 'description', 'base_price', 'duration', 'stylist']
