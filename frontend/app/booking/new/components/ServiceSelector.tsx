@@ -71,9 +71,6 @@ export default function ServiceSelector({
 
   return (
     <div className="space-y-4">
-      {services.map((Service) => (
-          <div>{Service.name} {Service.description} {Service.base_price}</div>
-      ))}
       <label className="block text-sm font-medium">Service</label>
 
       <div className="flex items-center gap-3 bg-black border border-neutral-800 rounded-2xl px-4 py-3">
