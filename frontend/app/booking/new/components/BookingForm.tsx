@@ -91,8 +91,8 @@ export default function BookingForm() {
 
     try {
       const payload = {
-        client: `http://localhost:8000/booking/clients/${selectedClient}/`,
-        service: `http://localhost:8000/booking/services/${selectedService}/`,
+        client: selectedClient,
+        service: selectedService,
         ...formData,
       };
 

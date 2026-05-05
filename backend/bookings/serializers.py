@@ -3,8 +3,8 @@ from rest_framework import serializers
 from bookings.models import Booking, Client, Service
 
 class BookingSerializer(serializers.ModelSerializer):
-    client_name = serializers.CharField(source='client.__str__', read_only=True)
-    service_name = serializers.CharField(source='service.name', read_only=True)
+    client_name = serializers.CharField(source='client', read_only=True)
+    service_name = serializers.CharField(source='service', read_only=True)
 
     class Meta:
         model = Booking
