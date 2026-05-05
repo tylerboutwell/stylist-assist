@@ -6,6 +6,7 @@ import { ArrowLeft } from "lucide-react";
 import BookingForm from "./components/BookingForm";
 import {useRouter} from "next/navigation";
 import AuthContext from "@/context/AuthContext";
+import Navbar from "@/components/Navbar";
 
 export default function NewBookingPage() {
   const router = useRouter();
@@ -21,7 +22,8 @@ export default function NewBookingPage() {
   }
 
   return (
-    <main className="min-h-screen bg-black text-white p-8">
+    <main className="min-h-screen bg-black text-white">
+      <Navbar/>
       <div className="max-w-3xl mx-auto">
         {/* Header */}
         <div className="mb-8">

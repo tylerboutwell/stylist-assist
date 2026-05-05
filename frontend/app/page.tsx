@@ -16,7 +16,7 @@ export default function Home() {
                   Create content, manage clients, and grow your brand — all in one place.
               </p>
 
-              <div className="mt-8 flex gap-4">
+              <div className="mt-8 mb-4 flex gap-4">
                   <button className="bg-white text-black px-6 py-3 rounded-xl font-medium hover:bg-neutral-200 transition">
                       Get Started
                   </button>

@@ -5,6 +5,7 @@ import { Calendar, Clock, User, Plus, ChevronRight } from 'lucide-react';
 import {apiFetch} from "@/lib/api";
 import {useRouter} from "next/navigation";
 import AuthContext from "@/context/AuthContext";
+import Navbar from "@/components/Navbar";
 
 interface Booking {
   id: number;
@@ -26,11 +27,8 @@ export default function BookingPage() {
       router.push('/login')}
   }, [user, authLoad, router])
 
-  if (!user) {
-    return null
-  }
-
   useEffect(() => {
+    if (!user || authLoad) return;
     const getBookings = async () => {
       const res = await apiFetch('http://localhost:8000/booking/bookings/');
       const data = await res.json();
@@ -38,11 +36,16 @@ export default function BookingPage() {
       setLoading(false);
     };
     getBookings();
-  }, []);
+  }, [user, authLoad]);
 
-  if (loading) return <p>Loading...</p>;
+  if (authLoad) return <p>Loading...</p>;
+
+  if (!user) return null;
+
+  if (loading) return <p>Loading bookings...</p>;
   return (
-    <main className="min-h-screen bg-black text-white p-8">
+    <main className="min-h-screen bg-black text-white">
+      <Navbar/>
       <div className="max-w-4xl mx-auto">
 
         {/* Header Section */}
