@@ -1,8 +1,10 @@
 'use client';
-import React, {useEffect, useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import Link from 'next/link';
 import { Calendar, Clock, User, Plus, ChevronRight } from 'lucide-react';
 import {apiFetch} from "@/lib/api";
+import {useRouter} from "next/navigation";
+import AuthContext from "@/context/AuthContext";
 
 interface Booking {
   id: number;
@@ -16,6 +18,17 @@ interface Booking {
 export default function BookingPage() {
   const [bookings, setBookings] = useState<Booking[]>([]);
   const [loading, setLoading] = useState(true);
+  const router = useRouter();
+  const {user, loading: authLoad} = useContext(AuthContext)
+
+  useEffect(() => {
+    if (!user && !authLoad) {
+      router.push('/login')}
+  }, [user, authLoad, router])
+
+  if (!user) {
+    return null
+  }
 
   useEffect(() => {
     const getBookings = async () => {
