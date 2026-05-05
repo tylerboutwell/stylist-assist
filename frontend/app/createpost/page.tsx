@@ -71,8 +71,8 @@ export default function CreatePostPage() {
   return (
       <main className="min-h-screen bg-neutral-950 text-white">
         <Navbar/>
-        <div className="flex flex-col items-center px-4 py-8">
-          <h1 className="text-3xl font-bold mb-6 text-center">
+        <div className="flex flex-col items-center px-4">
+          <h1 className="text-4xl font-bold mb-6 text-center">
             Generate a Social Media Post
           </h1>
 
