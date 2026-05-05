@@ -5,14 +5,9 @@ import {useContext, useEffect, useState} from "react";
 import AuthContext from "@/context/AuthContext";
 
 export default function Navbar() {
-    const [isLoggedIn, setIsLoggedIn] = useState(false);
-    const authContext = useContext(AuthContext);
+    const { user, loading } = useContext(AuthContext);
 
-    useEffect(() => {
-      const token = localStorage.getItem("accessToken");
-
-          setIsLoggedIn(!!authContext.user);
-        }, []);
+    if (loading) return null;
 
   return (
     <nav className="flex justify-between items-center px-8 py-4 border-b border-neutral-800 bg-neutral-950 text-white">
@@ -20,7 +15,7 @@ export default function Navbar() {
         StylistAssist
       </Link>
       <div className="space-x-6 text-sm text-neutral-300">
-        {isLoggedIn ? (
+        {user ? (
           <button
             onClick={() => {
               localStorage.removeItem("accessToken");
