@@ -82,48 +82,45 @@ export default function BookingPage() {
             });
 
             return (
-              <div
-                  key={booking.id}
-                  className="group relative bg-neutral-900 border border-neutral-800 p-5 rounded-2xl hover:border-neutral-700 transition-all cursor-pointer"
-              >
-                <div className="flex items-center justify-between">
-                  <div className="flex items-start gap-4">
-                    <div className="bg-neutral-800 p-3 rounded-xl text-blue-400">
-                      <User size={20}/>
-                    </div>
+              <Link href={`booking/${booking.id}`} key={booking.id} className='block group relative bg-neutral-900 border border-neutral-800 p-5 rounded-2xl hover:border-neutral-700 transition-all cursor-pointer'>
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-start gap-4">
+                      <div className="bg-neutral-800 p-3 rounded-xl text-blue-400">
+                        <User size={20}/>
+                      </div>
 
-                    <div>
-                      <h3 className="font-semibold text-lg">{booking.client_name}</h3>
-                      <p className="text-neutral-400 text-sm mb-2">{booking.service_name}</p>
+                      <div>
+                        <h3 className="font-semibold text-lg">{booking.client_name}</h3>
+                        <p className="text-neutral-400 text-sm mb-2">{booking.service_name}</p>
 
-                      <div className="flex flex-wrap gap-4 text-xs text-neutral-500">
-                        <span className="flex items-center gap-1">
-                          <Calendar size={14}/>
-                          {displayDate}
-                        </span>
-                        <span className="flex items-center gap-1">
-                          <Clock size={14}/>
-                          {displayTime}
-                        </span>
+                        <div className="flex flex-wrap gap-4 text-xs text-neutral-500">
+                          <span className="flex items-center gap-1">
+                            <Calendar size={14}/>
+                            {displayDate}
+                          </span>
+                          <span className="flex items-center gap-1">
+                            <Clock size={14}/>
+                            {displayTime}
+                          </span>
+                        </div>
                       </div>
                     </div>
-                  </div>
 
-                  <div className="flex items-center gap-4">
-                    <span
-                        className={`hidden sm:block px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider ${
-                            booking.status === 'CONFIRMED'
-                                ? 'bg-emerald-500/10 text-emerald-500'
-                                : booking.status === 'CANCELLED'
-                                ? 'bg-red-500/10 text-red-500'
-                                : 'bg-amber-500/10 text-amber-500'
-                        }`}>
-                      {booking.status}
-                    </span>
-                    <ChevronRight size={20} className="text-neutral-600 group-hover:text-white transition-colors"/>
+                    <div className="flex items-center gap-4">
+                      <span
+                          className={`hidden sm:block px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider ${
+                              booking.status === 'CONFIRMED'
+                                  ? 'bg-emerald-500/10 text-emerald-500'
+                                  : booking.status === 'CANCELLED'
+                                  ? 'bg-red-500/10 text-red-500'
+                                  : 'bg-amber-500/10 text-amber-500'
+                          }`}>
+                        {booking.status}
+                      </span>
+                      <ChevronRight size={20} className="text-neutral-600 group-hover:text-white transition-colors"/>
+                    </div>
                   </div>
-                </div>
-              </div>
+              </Link>
             )
           })
           ) : (
