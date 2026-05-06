@@ -3,6 +3,8 @@ import {useEffect, useState} from "react";
 import {apiFetch} from "@/lib/api";
 import Link from "next/link";
 import {useParams, useRouter} from "next/navigation";
+import {Calendar, Clock, FileText, Scissors, User} from "lucide-react";
+import Navbar from "@/components/Navbar";
 
 type Booking = {
   id: number;
@@ -66,21 +68,28 @@ export default function BookingDetail() {
   });
 
     return (
-        <div className="max-w-3xl mx-auto p-6">
+  <main className="min-h-screen bg-neutral-950 text-white">
+    <Navbar/>
+    <div className="max-w-4xl mx-auto p-6">
       {/* Header */}
       <div className="flex items-center justify-between mb-6">
-        <h1 className="text-2xl font-bold">Booking Details</h1>
+        <div>
+          <h1 className="text-3xl font-bold tracking-tight">Booking Details</h1>
+          <p className="text-sm text-neutral-400 mt-1">
+            View and manage booking details
+          </p>
+        </div>
 
         <div className="flex gap-3">
           <Link
             href={`/booking/${bookingId}/edit`}
-            className="px-4 py-2 rounded-xl bg-blue-600 hover:bg-blue-500 text-sm font-medium"
+            className="px-4 py-2 rounded-xl bg-blue-600 hover:bg-blue-500 text-sm font-medium transition shadow"
           >
             Edit
           </Link>
 
           <button
-            className="px-4 py-2 rounded-xl bg-red-600 hover:bg-red-500 text-sm font-medium"
+            className="px-4 py-2 rounded-xl bg-red-600 hover:bg-red-500 text-sm font-medium transition shadow cursor-pointer"
             onClick={async () => {
               if (!confirm("Delete this booking?")) return;
 
@@ -96,57 +105,100 @@ export default function BookingDetail() {
         </div>
       </div>
 
-      {/* Card */}
-      <div className="bg-neutral-900 border border-neutral-800 rounded-2xl p-6 space-y-6">
-        <div>
-          <p className="text-sm text-neutral-400">Client</p>
-          <p className="text-lg font-semibold">{booking.client_name}</p>
-        </div>
+      {/* Main Card */}
+      <div className="bg-neutral-900/80 backdrop-blur border border-neutral-800 rounded-2xl p-8 space-y-6 shadow-xl shadow-[0_0_0_1px_rgba(255,255,255,0.02),0_10px_30px_rgba(0,0,0,0.6)]">
 
-        <div>
-          <p className="text-sm text-neutral-400">Service</p>
-          <p className="text-lg font-semibold">{booking.service_name}</p>
-        </div>
+        {/* Top Row */}
+        <div className="flex items-center justify-between">
+          <div className="flex items-center gap-3">
+            <User className="w-5 h-5 text-neutral-400"/>
+            <div>
+              <p className="text-xs text-neutral-400 uppercase tracking-wider">
+                Client
+              </p>
+              <p className="text-lg font-semibold">{booking.client_name}</p>
+            </div>
+          </div>
 
-        <div>
-          <p className="text-sm text-neutral-400">Date</p>
-          <p className="text-lg">{displayDate}</p>
-        </div>
-
-        <div>
-          <p className="text-sm text-neutral-400">Time</p>
-          <p className="text-lg">{displayTime}</p>
-        </div>
-
-        <div>
-          <p className="text-sm text-neutral-400 mb-1">Status</p>
+          {/* Status Badge */}
           <span
-            className={`inline-block px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider ${
-              booking.status === "CONFIRMED"
-                ? "bg-emerald-500/10 text-emerald-500"
-                : booking.status === "CANCELLED"
-                ? "bg-red-500/10 text-red-500"
-                : "bg-amber-500/10 text-amber-500"
-            }`}
+              className={`px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider ${
+                  booking.status === "CONFIRMED"
+                      ? "bg-emerald-500/20 text-emerald-400 border border-emerald-500/30"
+                      : booking.status === "CANCELLED"
+                      ? "bg-red-500/20 text-red-400 border border-red-500/30"
+                      : "bg-amber-500/20 text-amber-400 border border-amber-500/30"
+              }`}
           >
             {booking.status}
           </span>
         </div>
 
-        {booking.notes && (
-          <div>
-            <p className="text-sm text-neutral-400">Notes</p>
-            <p className="text-neutral-300">{booking.notes}</p>
+        {/* Divider */}
+        <div className="border-t border-neutral-800"/>
+
+        {/* Grid Info */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+
+          <div className="flex items-start gap-3">
+            <Scissors className="w-5 h-5 text-neutral-400 mt-1"/>
+            <div>
+              <p className="text-xs text-neutral-400 uppercase tracking-wider">
+                Service
+              </p>
+              <p className="text-base font-medium">{booking.service_name}</p>
+            </div>
           </div>
+
+          <div className="flex items-start gap-3">
+            <Calendar className="w-5 h-5 text-neutral-400 mt-1"/>
+            <div>
+              <p className="text-xs text-neutral-400 uppercase tracking-wider">
+                Date
+              </p>
+              <p className="text-base font-medium">{displayDate}</p>
+            </div>
+          </div>
+
+          <div className="flex items-start gap-3">
+            <Clock className="w-5 h-5 text-neutral-400 mt-1"/>
+            <div>
+              <p className="text-xs text-neutral-400 uppercase tracking-wider">
+                Time
+              </p>
+              <p className="text-base font-medium">{displayTime}</p>
+            </div>
+          </div>
+        </div>
+
+        {/* Notes */}
+        {booking.notes && (
+            <>
+              <div className="border-t border-neutral-800"/>
+
+              <div className="flex items-start gap-3">
+                <FileText className="w-5 h-5 text-neutral-400 mt-1"/>
+                <div>
+                  <p className="text-xs text-neutral-400 uppercase tracking-wider">
+                    Notes
+                  </p>
+                  <p className="text-sm text-neutral-300 mt-1 leading-relaxed">
+                    {booking.notes}
+                  </p>
+                </div>
+              </div>
+            </>
         )}
       </div>
 
+      {/* Back Link */}
       <Link
-        href="/booking"
-        className="inline-block mt-6 text-sm text-neutral-400 hover:text-white"
+          href="/booking"
+          className="inline-block mt-6 text-sm text-neutral-400 hover:text-white transition"
       >
         ← Back to bookings
       </Link>
     </div>
-    );
+</main>
+);
 }
