@@ -3,7 +3,7 @@ import {useEffect, useState} from "react";
 import {apiFetch} from "@/lib/api";
 import Link from "next/link";
 import {useParams, useRouter} from "next/navigation";
-import {Calendar, Clock, FileText, Scissors, User} from "lucide-react";
+import {Calendar, Clock, DollarSign, FileText, Scissors, User} from "lucide-react";
 import Navbar from "@/components/Navbar";
 
 type Booking = {
@@ -11,7 +11,9 @@ type Booking = {
   client_name: string;
   service_name: string;
   start_time: string;
+  end_time: string;
   status: string;
+  booked_price: string;
   notes?: string;
 };
 
@@ -61,11 +63,16 @@ export default function BookingDetail() {
   }
 
   const date = new Date(booking.start_time);
+  const endDate = new Date(booking.end_time)
   const displayDate = date.toLocaleDateString();
-  const displayTime = date.toLocaleTimeString([], {
+  const startDisplayTime = date.toLocaleTimeString([], {
     hour: "2-digit",
     minute: "2-digit",
   });
+  const endDisplayTime = endDate.toLocaleTimeString([], {
+    hour:"2-digit",
+    minute: "2-digit",
+  })
 
     return (
   <main className="min-h-screen bg-neutral-950 text-white">
@@ -170,7 +177,16 @@ export default function BookingDetail() {
               <p className="text-xs text-neutral-400 uppercase tracking-wider">
                 Time
               </p>
-              <p className="text-base font-medium">{displayTime}</p>
+              <p className="text-base font-medium">{startDisplayTime} - {endDisplayTime}</p>
+            </div>
+          </div>
+          <div className="flex items-center gap-3">
+            <DollarSign className="w-5 h-5 text-neutral-400 mt-1"/>
+            <div>
+              <p className="text-xs text-neutral-400 uppercase tracking-wider">
+                Booked price
+              </p>
+              <p className="text-base font-medium">{booking.booked_price}</p>
             </div>
           </div>
         </div>
