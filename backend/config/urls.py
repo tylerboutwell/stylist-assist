@@ -8,7 +8,7 @@ from rest_framework_simplejwt.views import (
 from api import views
 from bookings import views as bookings_views
 from api.models import Post
-from bookings.models import Service
+from bookings.models import Service, Booking
 
 router = routers.DefaultRouter()
 router.register(r"users", views.UserViewSet)
@@ -17,8 +17,9 @@ booking_router = routers.DefaultRouter()
 booking_router.register(r"bookings", bookings_views.BookingViewSet, basename="booking")
 booking_router.register(r"clients", bookings_views.ClientViewSet, basename="client")
 booking_router.register(r"services", bookings_views.ServiceViewSet, basename="service")
-admin.site.register(Post)
+admin.site.register(Booking)
 admin.site.register(Service)
+admin.site.register(Post)
 
 # Wire up our API using automatic URL routing.
 # Additionally, we include login URLs for the browsable API.

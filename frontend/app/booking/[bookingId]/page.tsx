@@ -72,7 +72,7 @@ export default function BookingDetail() {
     <Navbar/>
     <div className="max-w-4xl mx-auto p-6">
       {/* Header */}
-      <div className="flex items-center justify-between mb-6">
+      <div className="flex items-center justify-between mb-4">
         <div>
           <h1 className="text-3xl font-bold tracking-tight">Booking Details</h1>
           <p className="text-sm text-neutral-400 mt-1">
@@ -80,7 +80,7 @@ export default function BookingDetail() {
           </p>
         </div>
 
-        <div className="flex gap-3">
+        <div className="flex gap-2">
           <Link
             href={`/booking/${bookingId}/edit`}
             className="px-4 py-2 rounded-xl bg-blue-600 hover:bg-blue-500 text-sm font-medium transition shadow"
@@ -93,11 +93,15 @@ export default function BookingDetail() {
             onClick={async () => {
               if (!confirm("Delete this booking?")) return;
 
-              await apiFetch(`/booking/bookings/${bookingId}/`, {
+              const res = await apiFetch(`http://localhost:8000/booking/bookings/${bookingId}/`, {
                 method: "DELETE",
               });
 
-              window.location.href = "/booking";
+              console.log(res.status);
+
+              if (res.ok) {
+                window.location.href = "/booking";
+              }
             }}
           >
             Delete
