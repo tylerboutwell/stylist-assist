@@ -47,7 +47,7 @@ class Service(models.Model):
     stylist = models.ForeignKey(User, on_delete=models.CASCADE, related_name="services")
 
     def __str__(self):
-        return f"{self.name} (${self.base_price})"
+        return f"{self.name}"
 
 class Client(models.Model):
     first_name = models.CharField(max_length=50)

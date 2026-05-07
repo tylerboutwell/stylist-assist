@@ -1,7 +1,14 @@
 'use client';
 import React, {useContext, useEffect, useState} from 'react';
 import Link from 'next/link';
-import { Calendar, Clock, User, Plus, ChevronRight } from 'lucide-react';
+import {
+  Calendar,
+  Clock,
+  User,
+  Plus,
+  ChevronRight,
+  DollarSign,
+} from 'lucide-react';
 import {apiFetch} from "@/lib/api";
 import {useRouter} from "next/navigation";
 import AuthContext from "@/context/AuthContext";
@@ -12,6 +19,7 @@ interface Booking {
   client_name: string;
   service_name: string;
   start_time: string;
+  end_time: string;
   status: string;
   booked_price: string;
 }
@@ -69,17 +77,23 @@ export default function BookingPage() {
 
           {bookings.length > 0 ? (
           bookings.map((booking:Booking) => {
-            const dateObj = new Date(booking.start_time);
-            const displayDate = dateObj.toLocaleDateString('en-US', {
+            const startDateObj = new Date(booking.start_time);
+            const endDateObj = new Date(booking.end_time);
+            const displayDate = startDateObj.toLocaleDateString('en-US', {
               weekday: 'short',
               month: 'short',
               day: 'numeric',
             });
-            const displayTime = dateObj.toLocaleTimeString('en-US', {
+            const startDisplayTime = startDateObj.toLocaleTimeString('en-US', {
               hour: 'numeric',
               minute: '2-digit',
               hour12: true,
             });
+            const endDisplayTime = endDateObj.toLocaleTimeString('en-US', {
+              hour: 'numeric',
+              minute: '2-digit',
+              hour12: true,
+            })
 
             return (
               <Link href={`booking/${booking.id}`} key={booking.id} className='block group relative bg-neutral-900 border border-neutral-800 p-5 rounded-2xl hover:border-neutral-700 transition-all cursor-pointer'>
@@ -100,7 +114,7 @@ export default function BookingPage() {
                           </span>
                           <span className="flex items-center gap-1">
                             <Clock size={14}/>
-                            {displayTime}
+                            {startDisplayTime} - {endDisplayTime}
                           </span>
                         </div>
                       </div>
@@ -112,10 +126,14 @@ export default function BookingPage() {
                               booking.status === 'CONFIRMED'
                                   ? 'bg-emerald-500/10 text-emerald-500'
                                   : booking.status === 'CANCELLED'
-                                  ? 'bg-red-500/10 text-red-500'
-                                  : 'bg-amber-500/10 text-amber-500'
+                                      ? 'bg-red-500/10 text-red-500'
+                                      : 'bg-amber-500/10 text-amber-500'
                           }`}>
                         {booking.status}
+                      </span>
+                      <span className="flex items-center text-neutral-400 group-hover:text-white transition-colors">
+                        <DollarSign size={14}/>
+                        {booking.booked_price}
                       </span>
                       <ChevronRight size={20} className="text-neutral-600 group-hover:text-white transition-colors"/>
                     </div>
@@ -124,7 +142,7 @@ export default function BookingPage() {
             )
           })
           ) : (
-            <div className="text-center py-20 bg-neutral-900/50 rounded-3xl border border-dashed border-neutral-800">
+              <div className="text-center py-20 bg-neutral-900/50 rounded-3xl border border-dashed border-neutral-800">
               <p className="text-neutral-500">No appointments scheduled yet.</p>
             </div>
           )}
