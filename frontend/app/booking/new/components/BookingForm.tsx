@@ -120,6 +120,8 @@ const [selectedService, setSelectedService] = useState<number | null>(
         client: selectedClient,
         service: selectedService,
         ...formData,
+        start_time: new Date(formData.start_time).toISOString(),
+        end_time: new Date(formData.end_time).toISOString(),
       };
 
       await onSubmit(payload);
