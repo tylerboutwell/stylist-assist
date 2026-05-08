@@ -14,18 +14,42 @@ type Service = {
   duration: number;
 };
 
+type Booking = {
+  client?: number;
+  service?: number;
+  start_time: string;
+  end_time: string;
+  status: string;
+  booked_price: string;
+  notes?: string;
+};
 
-export default function BookingForm() {
-  const [selectedClient, setSelectedClient] = useState<number | null>(null);
-  const [selectedService, setSelectedService] = useState<number | null>(null);
+type BookingFormProps = {
+  initialData?: Booking;
+  onSubmit: (data: any) => Promise<void>;
+  submitText?: string;
+};
+
+export default function BookingForm({
+  initialData,
+  onSubmit,
+  submitText = "Save Booking",
+}: BookingFormProps) {
+  const [selectedClient, setSelectedClient] = useState<number | null>(
+  initialData?.client || null
+);
+const [selectedService, setSelectedService] = useState<number | null>(
+  initialData?.service || null
+);
+
   const [services, setServices] = useState<Service[]>([]);
 
   const [formData, setFormData] = useState({
-    start_time: "",
-    end_time: "",
-    status: "PENDING",
-    booked_price: "",
-    notes: "",
+    start_time: initialData?.start_time || "",
+    end_time: initialData?.end_time || "",
+    status: initialData?.status || "PENDING",
+    booked_price: initialData?.booked_price || "",
+    notes: initialData?.notes || "",
   });
 
   const [loading, setLoading] = useState(false);
@@ -60,10 +84,12 @@ export default function BookingForm() {
         end.setMinutes(start.getMinutes() + minutes);
 
         // Format to YYYY-MM-DDTHH:mm for the input field
+        const formattedStart = start.toLocaleString('sv-SE').replace(' ', 'T').slice(0, 16);
         const formattedEnd = end.toLocaleString('sv-SE').replace(' ', 'T').slice(0, 16);
 
         setFormData((prev) => ({
           ...prev,
+          start_time: formattedStart,
           end_time: formattedEnd,
         }));
       }
@@ -96,32 +122,7 @@ export default function BookingForm() {
         ...formData,
       };
 
-      const res = await apiFetch("http://localhost:8000/booking/bookings/", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(payload),
-      });
-
-      if (!res.ok) {
-        console.log(res)
-        console.log(payload)
-        throw new Error("Failed to create booking");
-      }
-
-      alert("Booking created successfully!");
-
-      setFormData({
-        start_time: "",
-        end_time: "",
-        status: "PENDING",
-        booked_price: "",
-        notes: "",
-      });
-
-      setSelectedClient(null);
-      setSelectedService(null);
+      await onSubmit(payload);
     } catch (error) {
       console.error(error);
       alert("Something went wrong.");
@@ -241,7 +242,7 @@ export default function BookingForm() {
             className="w-full flex items-center justify-center gap-2 bg-white text-black py-3 rounded-2xl font-semibold hover:bg-neutral-200 transition-colors disabled:opacity-50"
         >
           <Save size={18}/>
-          {loading ? "Saving..." : "Save Booking"}
+          {loading ? "Saving..." : submitText}
         </button>
       </form>
   );

@@ -7,6 +7,7 @@ import BookingForm from "./components/BookingForm";
 import {useRouter} from "next/navigation";
 import AuthContext from "@/context/AuthContext";
 import Navbar from "@/components/Navbar";
+import {apiFetch} from "@/lib/api";
 
 export default function NewBookingPage() {
   const router = useRouter();
@@ -44,7 +45,27 @@ export default function NewBookingPage() {
         </div>
 
         {/* Form */}
-        <BookingForm />
+        <BookingForm
+        submitText="Create Booking"
+        onSubmit={async (payload) => {
+          const res = await apiFetch(
+            "http://localhost:8000/booking/bookings/",
+            {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify(payload),
+            }
+          );
+
+          if (!res.ok) {
+            throw new Error("Failed");
+          }
+
+          router.push("/booking");
+        }}
+        />
       </div>
     </main>
   );
