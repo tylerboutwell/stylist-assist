@@ -146,6 +146,10 @@ const [selectedService, setSelectedService] = useState<number | null>(
         <ServiceSelector
             selectedService={selectedService}
             onSelect={setSelectedService}
+            onServiceCreated={(newService) => {
+              setServices((prev) => [...prev, newService]);
+              setSelectedService(newService.id);
+            }}
         />
 
         <div className="grid md:grid-cols-2 gap-4">

@@ -15,11 +15,13 @@ type Service = {
 type Props = {
   selectedService: number | null;
   onSelect: (id: number) => void;
+  onServiceCreated: (service: Service) => void;
 };
 
 export default function ServiceSelector({
   selectedService,
   onSelect,
+  onServiceCreated
 }: Props) {
   const [services, setServices] = useState<Service[]>([]);
   const [showNewForm, setShowNewForm] = useState(false);
@@ -56,6 +58,7 @@ export default function ServiceSelector({
     }
 
     const created = await res.json();
+    onServiceCreated(created);
 
     setServices((prev) => [...prev, created]);
     onSelect(created.id);
