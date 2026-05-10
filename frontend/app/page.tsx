@@ -17,9 +17,11 @@ export default function Home() {
               </p>
 
               <div className="mt-8 mb-4 flex gap-4">
-                  <button className="bg-white text-black px-6 py-3 rounded-xl font-medium hover:bg-neutral-200 transition">
-                      Get Started
-                  </button>
+                    <Link href="/get-started">
+                      <button className="bg-white text-black px-6 py-3 rounded-xl font-medium hover:bg-neutral-200 transition">
+                          Get Started
+                      </button>
+                    </Link>
                   <button className="border border-neutral-700 px-6 py-3 rounded-xl hover:bg-neutral-900 transition">
                       Learn More
                   </button>
