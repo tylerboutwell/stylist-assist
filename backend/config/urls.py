@@ -11,20 +11,18 @@ from api.models import Post
 from bookings.models import Service, Booking
 
 router = routers.DefaultRouter()
-router.register(r"users", views.UserViewSet)
-router.register(r"posts", views.PostViewSet)
+router.register(r"users", views.UserViewSet, basename="users")
+router.register(r"posts", views.PostViewSet, basename="posts")
 booking_router = routers.DefaultRouter()
 booking_router.register(r"bookings", bookings_views.BookingViewSet, basename="booking")
 booking_router.register(r"clients", bookings_views.ClientViewSet, basename="client")
 booking_router.register(r"services", bookings_views.ServiceViewSet, basename="service")
-admin.site.register(Booking)
-admin.site.register(Service)
-admin.site.register(Post)
 
 # Wire up our API using automatic URL routing.
 # Additionally, we include login URLs for the browsable API.
 urlpatterns = [
     path("api/", include(router.urls)),
+    path("register/", views.RegisterView.as_view(), name="register"),
     path('admin/', admin.site.urls),
     path("api-auth/", include("rest_framework.urls", namespace="rest_framework")),
     path('api/token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),

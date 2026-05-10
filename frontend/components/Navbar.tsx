@@ -27,7 +27,10 @@ export default function Navbar() {
             Logout
           </button>
         ) : (
-          <Link href="/login" className="hover:text-white transition">Login</Link>
+            <div className="flex gap-3">
+                <Link href="/signup" className="hover:text-white transition">Sign up </Link>
+                <Link href="/login" className="hover:text-white transition">Login</Link>
+            </div>
         )}
       </div>
     </nav>

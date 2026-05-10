@@ -1,9 +1,10 @@
 from django.contrib.auth.models import User
-from rest_framework import permissions, viewsets, response
+from rest_framework import permissions, viewsets, response, status
 from rest_framework.decorators import action
+from rest_framework.views import APIView
 
 from .models import Post
-from .serializers import UserSerializer, PostSerializer
+from .serializers import UserSerializer, PostSerializer, RegisterSerializer
 from openai import OpenAI
 from django.conf import settings
 client = OpenAI(api_key=settings.OPENAI_API_KEY)
@@ -11,14 +12,31 @@ import base64
 
 
 class UserViewSet(viewsets.ModelViewSet):
-    queryset = User.objects.all()
     serializer_class = UserSerializer
     permission_classes = [permissions.IsAuthenticated]
+
+    def get_queryset(self):
+        queryset = User.objects.filter(id=self.request.user.id)
 
     @action(detail=False, methods=['get'], permission_classes=[permissions.IsAuthenticated])
     def me(self, request):
         serializer = UserSerializer(request.user, context={'request': request})
         return response.Response(serializer.data)
+
+class RegisterView(APIView):
+    permission_classes = [permissions.AllowAny]
+
+    def post(self, request):
+        serializer = RegisterSerializer(data=request.data)
+
+        if serializer.is_valid():
+            serializer.save()
+            return response.Response(
+                {"message": "User created successfully"},
+                status=status.HTTP_201_CREATED
+            )
+
+        return response.Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 class PostViewSet(viewsets.ModelViewSet):
     queryset = Post.objects.all()
