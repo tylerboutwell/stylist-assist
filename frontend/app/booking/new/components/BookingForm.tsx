@@ -4,7 +4,7 @@ import React, {useEffect, useState} from "react";
 import { Calendar, Clock, Save, StickyNote } from "lucide-react";
 import ClientSelector from "./ClientSelector";
 import ServiceSelector from "./ServiceSelector";
-import {apiFetch} from "@/lib/api";
+import {API_URL, apiFetch} from "@/lib/api";
 
 type Service = {
   id: number;
@@ -57,7 +57,7 @@ const [selectedService, setSelectedService] = useState<number | null>(
   useEffect(() => {
       const fetchServices = async () => {
         try {
-          const response = await apiFetch('http://localhost:8000/booking/services/');
+          const response = await apiFetch(`${API_URL}/booking/services/`);
           const data = await response.json();
           setServices(data);
         } catch (error) {

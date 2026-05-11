@@ -1,6 +1,8 @@
 let isRefreshing = false;
 let refreshPromise = null;
 
+export const API_URL = process.env.NEXT_PUBLIC_API_URL;
+
 export async function apiFetch(url, options = {}) {
   let accessToken = localStorage.getItem("accessToken");
 
@@ -51,7 +53,7 @@ async function refreshToken() {
     return false;
   }
 
-  const res = await fetch("http://localhost:8000/api/token/refresh/", {
+  const res = await fetch(`${API_URL}/api/token/refresh/`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",

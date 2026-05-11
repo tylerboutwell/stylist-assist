@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import AuthContext from "@/context/AuthContext";
 import Navbar from "@/components/Navbar";
 import Link from "next/link";
+import {API_URL} from "@/lib/api";
 
 export default function SignupPage() {
   const router = useRouter();
@@ -30,7 +31,7 @@ export default function SignupPage() {
     try {
       setLoading(true);
 
-      const res = await fetch("http://localhost:8000/register/", {
+      const res = await fetch(`${API_URL}/register/`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

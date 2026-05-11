@@ -1,6 +1,6 @@
 'use client';
 import {useEffect, useState} from "react";
-import {apiFetch} from "@/lib/api";
+import {API_URL, apiFetch} from "@/lib/api";
 import Link from "next/link";
 import {useParams, useRouter} from "next/navigation";
 import {Calendar, Clock, DollarSign, FileText, Scissors, User} from "lucide-react";
@@ -18,7 +18,7 @@ type Booking = {
 };
 
 async function getBooking(id: string) {
-  const res = await fetch(`http://localhost:8000/booking/bookings/${id}/`, {
+  const res = await fetch(`${API_URL}/booking/bookings/${id}/`, {
     cache: "no-store",
   });
 
@@ -40,7 +40,7 @@ export default function BookingDetail() {
     const fetchBooking = async () => {
       try {
         const res = await apiFetch(
-          `http://localhost:8000/booking/bookings/${bookingId}/`
+          `${API_URL}/booking/bookings/${bookingId}/`
         );
         const data = await res.json();
         setBooking(data);

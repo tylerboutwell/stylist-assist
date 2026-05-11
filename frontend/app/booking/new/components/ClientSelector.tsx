@@ -2,7 +2,7 @@
 
 import React, { useEffect, useState } from "react";
 import { User, Plus } from "lucide-react";
-import {apiFetch} from "@/lib/api";
+import {API_URL, apiFetch} from "@/lib/api";
 import {bgBlack} from "next/dist/lib/picocolors";
 
 type Client = {
@@ -36,7 +36,7 @@ export default function ClientSelector({
 
   useEffect(() => {
     const fetchClients = async () => {
-      const res = await apiFetch('http://localhost:8000/booking/clients/');
+      const res = await apiFetch(`${API_URL}/booking/clients/`);
       const data = await res.json();
       setClients(data);
     };
@@ -45,7 +45,7 @@ export default function ClientSelector({
   }, []);
 
   const createClient = async () => {
-    const res = await apiFetch("http://localhost:8000/booking/clients/", {
+    const res = await apiFetch(`${API_URL}/booking/clients/`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

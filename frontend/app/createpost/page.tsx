@@ -3,7 +3,7 @@
 import {useContext, useEffect, useState} from "react";
 import Navbar from "@/components/Navbar";
 import {useRouter} from "next/navigation";
-import { apiFetch } from "@/lib/api";
+import {API_URL, apiFetch} from "@/lib/api";
 import AuthContext from "@/context/AuthContext";
 
 export default function CreatePostPage() {
@@ -47,7 +47,7 @@ export default function CreatePostPage() {
     formData.append("image", image);
     formData.append("prompt", prompt)
 
-    const res = await apiFetch("http://localhost:8000/api/posts/", {
+    const res = await apiFetch(`${API_URL}/api/posts/`, {
       method: "POST",
       body: formData,
     });

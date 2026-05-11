@@ -9,7 +9,7 @@ import {
   ChevronRight,
   DollarSign,
 } from 'lucide-react';
-import {apiFetch} from "@/lib/api";
+import {API_URL, apiFetch} from "@/lib/api";
 import {useRouter} from "next/navigation";
 import AuthContext from "@/context/AuthContext";
 import Navbar from "@/components/Navbar";
@@ -38,7 +38,7 @@ export default function BookingPage() {
   useEffect(() => {
     if (!user || authLoad) return;
     const getBookings = async () => {
-      const res = await apiFetch('http://localhost:8000/booking/bookings/');
+      const res = await apiFetch(`${API_URL}/booking/bookings/`);
       const data = await res.json();
       setBookings(data);
       setLoading(false);

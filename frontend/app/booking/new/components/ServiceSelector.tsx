@@ -2,7 +2,7 @@
 
 import React, { useEffect, useState } from "react";
 import { Scissors, Plus } from "lucide-react";
-import {apiFetch} from "@/lib/api";
+import {API_URL, apiFetch} from "@/lib/api";
 
 type Service = {
   id: number;
@@ -35,7 +35,7 @@ export default function ServiceSelector({
 
   useEffect(() => {
     const fetchServices = async () => {
-      const res = await apiFetch("http://localhost:8000/booking/services/");
+      const res = await apiFetch(`${API_URL}/booking/services/`);
       const data = await res.json();
       setServices(data);
     };
@@ -44,7 +44,7 @@ export default function ServiceSelector({
   }, []);
 
   const createService = async () => {
-    const res = await apiFetch("http://localhost:8000/booking/services/", {
+    const res = await apiFetch(`${API_URL}/booking/services/`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
