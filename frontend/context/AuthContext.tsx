@@ -25,7 +25,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
       return;
     }
     try {
-      const res = await apiFetch("http://localhost:8000/api/users/me/");
+      const res = await apiFetch(`${API_URL}/api/users/me/`);
 
       if (res.ok) {
         const userData = await res.json();
