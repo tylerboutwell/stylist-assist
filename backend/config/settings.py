@@ -50,7 +50,8 @@ MIDDLEWARE = [
 ]
 
 CORS_ALLOWED_ORIGINS = [
-    "http://localhost:3000",  # Next.js dev server
+    "http://localhost:3000",
+    "https://stylist-assist.vercel.app"# Next.js dev server
 ]
 
 ROOT_URLCONF = 'config.urls'
@@ -122,6 +123,7 @@ STATIC_URL = 'static/'
 
 CSRF_TRUSTED_ORIGINS = [
     "http://localhost:3000",
+    "https://stylist-assist.vercel.app"
 ]
 
 #JWT AUTHENTICATION
@@ -130,14 +132,3 @@ REST_FRAMEWORK = {
         "rest_framework_simplejwt.authentication.JWTAuthentication",
     ),
 }
-
-#BROWSABLE API AUTHENTICATION
-#REST_FRAMEWORK = {
-#    'DEFAULT_AUTHENTICATION_CLASSES': [
-#        'rest_framework.authentication.SessionAuthentication',
-#        'rest_framework.authentication.BasicAuthentication',
-#    ],
-#    'DEFAULT_PERMISSION_CLASSES': [
-#        'rest_framework.permissions.IsAuthenticated',
-#    ],
-#}
