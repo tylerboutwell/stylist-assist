@@ -2,13 +2,16 @@
 import Navbar from "@/components/Navbar";
 import Link from "next/link";
 import WelcomeMessage from "@/components/WelcomeMessage";
+import {Suspense} from "react";
 
 export default function Home() {
   return (
       <main className="min-h-screen bg-neutral-950 text-white flex flex-col">
           {/* use Navbar and WelcomeMessage from components */}
           <Navbar/>
-          <WelcomeMessage/>
+          <Suspense fallback={null}>
+            <WelcomeMessage/>
+          </Suspense>
 
           {/* HERO SECTION */}
           <section className="flex flex-1 flex-col justify-center items-center text-center px-6">
