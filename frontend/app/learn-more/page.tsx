@@ -137,11 +137,11 @@ export default function LearnMorePage() {
                             </span>
 
                             <h3 className="text-xl font-semibold">
-                                Add clients & services
+                                Manage your bookings
                             </h3>
 
                             <p className="mt-3 text-sm text-neutral-400">
-                                Start organizing appointments, formulas, and notes.
+                                Add clients, choose services, and organize everything in one place.
                             </p>
                         </div>
 

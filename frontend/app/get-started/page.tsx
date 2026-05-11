@@ -72,30 +72,33 @@ export default function GetStartedPage() {
         </div>
 
 
-        {/* Optional Demo Section */}
-        <div className="mt-16 bg-neutral-900 border border-neutral-800 rounded-2xl p-8 text-center">
-          <h2 className="text-2xl font-semibold">Want to explore first?</h2>
-          <p className="text-neutral-400 mt-2">
-            Load sample data to see how everything works without setting anything up.
+        {/* Bottom CTA */}
+        <div className="mt-20 text-center">
+          <h2 className="text-2xl font-semibold">
+            Ready to start managing your business?
+          </h2>
+
+          <p className="text-neutral-400 mt-3 max-w-xl mx-auto">
+            Create bookings, manage clients, and grow your brand from one dashboard.
           </p>
 
-          <button
-              className="mt-6 bg-white text-black px-6 py-3 rounded-xl font-medium hover:bg-neutral-200 transition"
-              onClick={() => alert("Hook this up to seed/demo data later")}
-          >
-            Load Demo Data
-          </button>
+          <div className="flex items-center justify-center gap-4 mt-8">
+            <Link
+                href="/signup"
+                className="bg-white text-black px-6 py-3 rounded-xl font-medium hover:bg-neutral-200 transition"
+            >
+              Create Account
+            </Link>
+
+            <Link
+                href="/"
+                className="border border-neutral-700 px-6 py-3 rounded-xl hover:border-neutral-500 transition"
+            >
+              Go to Dashboard
+            </Link>
+          </div>
         </div>
 
-        {/* Bottom CTA */}
-        <div className="text-center mt-16">
-          <Link
-            href="/"
-            className="text-blue-400 hover:text-blue-300 text-sm"
-          >
-            Skip setup and go to dashboard →
-          </Link>
-        </div>
       </div>
     </main>
   );
