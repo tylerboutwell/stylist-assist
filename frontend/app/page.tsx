@@ -1,36 +1,14 @@
-"use client";
 
-import { useEffect, useState } from "react";
-import { useSearchParams } from "next/navigation";
 import Navbar from "@/components/Navbar";
 import Link from "next/link";
+import WelcomeMessage from "@/components/WelcomeMessage";
 
 export default function Home() {
-    const searchParams = useSearchParams();
-    const [showMessage, setShowMessage] = useState(false);
-
-    useEffect(() => {
-    if (searchParams.get("welcome") === "true") {
-      setShowMessage(true);
-
-      // optional: auto-hide
-      setTimeout(() => setShowMessage(false), 4000);
-    }
-    }, [searchParams]);
   return (
       <main className="min-h-screen bg-neutral-950 text-white flex flex-col">
-          {/* use navbar from components */}
+          {/* use Navbar and WelcomeMessage from components */}
           <Navbar/>
-
-          {/* If user just registered display welcome message */}
-          {showMessage && (
-              <div className="fixed top-6 left-1/2 -translate-x-1/2 z-50">
-                <div className="bg-emerald-500/90 text-black px-5 py-3 rounded-2xl shadow-xl backdrop-blur-md border border-emerald-300/30 flex items-center gap-2 animate-fade-in cursor-pointer">
-                  <span className="text-lg">🎉</span>
-                  <span className="font-medium">Account created successfully</span>
-                </div>
-              </div>
-            )}
+          <WelcomeMessage/>
 
           {/* HERO SECTION */}
           <section className="flex flex-1 flex-col justify-center items-center text-center px-6">
