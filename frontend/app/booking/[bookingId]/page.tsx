@@ -100,7 +100,7 @@ export default function BookingDetail() {
             onClick={async () => {
               if (!confirm("Delete this booking?")) return;
 
-              const res = await apiFetch(`http://localhost:8000/booking/bookings/${bookingId}/`, {
+              const res = await apiFetch(`${API_URL}/booking/bookings/${bookingId}/`, {
                 method: "DELETE",
               });
 
