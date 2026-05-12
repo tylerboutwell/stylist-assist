@@ -10,7 +10,7 @@ import {API_URL} from "@/lib/api";
 export default function SignupPage() {
   const router = useRouter();
 
-  const {login} = useContext(AuthContext)
+  const {login, user, loading:authLoading} = useContext(AuthContext)
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -18,6 +18,12 @@ export default function SignupPage() {
 
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
+
+    useEffect(() => {
+    if (!authLoading && user) {
+      router.replace("/");
+    }
+  }, [user, authLoading, router]);
 
   const handleSignup = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -65,6 +71,11 @@ export default function SignupPage() {
     } finally {
       setLoading(false);
     }
+
+    if (authLoading) {
+    return null;
+  }
+
   };
 
   return (

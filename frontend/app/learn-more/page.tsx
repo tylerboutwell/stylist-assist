@@ -29,7 +29,7 @@ export default function LearnMorePage() {
                             </button>
                         </Link>
 
-                        <Link href="/booking">
+                        <Link href="/">
                             <button className="border border-neutral-700 px-7 py-3 rounded-xl hover:bg-neutral-900 transition">
                                 View Dashboard
                             </button>
