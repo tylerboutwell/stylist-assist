@@ -1,6 +1,6 @@
 "use client";
 
-import {useContext, useState} from "react";
+import {useContext, useEffect, useState} from "react";
 import { useRouter } from "next/navigation";
 import AuthContext from "@/context/AuthContext";
 import Navbar from "@/components/Navbar";
@@ -19,7 +19,7 @@ export default function SignupPage() {
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
 
-    useEffect(() => {
+  useEffect(() => {
     if (!authLoading && user) {
       router.replace("/");
     }
