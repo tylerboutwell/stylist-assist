@@ -90,7 +90,7 @@ export default function BookingDetail() {
       submitText="Save Changes"
       onSubmit={async (payload) => {
         const res = await apiFetch(
-          `http://localhost:8000/booking/bookings/${bookingId}/`,
+          `${API_URL}/booking/bookings/${bookingId}/`,
           {
             method: "PATCH",
             headers: {

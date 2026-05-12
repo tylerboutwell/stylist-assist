@@ -7,7 +7,7 @@ import BookingForm from "./components/BookingForm";
 import {useRouter} from "next/navigation";
 import AuthContext from "@/context/AuthContext";
 import Navbar from "@/components/Navbar";
-import {apiFetch} from "@/lib/api";
+import {API_URL, apiFetch} from "@/lib/api";
 
 export default function NewBookingPage() {
   const router = useRouter();
@@ -49,7 +49,7 @@ export default function NewBookingPage() {
         submitText="Create Booking"
         onSubmit={async (payload) => {
           const res = await apiFetch(
-            "http://localhost:8000/booking/bookings/",
+            `${API_URL}/booking/bookings/`,
             {
               method: "POST",
               headers: {
