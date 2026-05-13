@@ -51,7 +51,8 @@ MIDDLEWARE = [
 
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:3000",
-    "https://stylist-assist.vercel.app"# Next.js dev server
+    "https://stylist-assist.vercel.app",
+    "https://stylistassist.com"
 ]
 
 ROOT_URLCONF = 'config.urls'
@@ -123,7 +124,8 @@ STATIC_URL = 'static/'
 
 CSRF_TRUSTED_ORIGINS = [
     "http://localhost:3000",
-    "https://stylist-assist.vercel.app"
+    "https://stylist-assist.vercel.app",
+    "https://stylistassist.com"
 ]
 
 #JWT AUTHENTICATION
