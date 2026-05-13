@@ -51,7 +51,7 @@ export default function BookingPage() {
 
   if (!user) return null;
 
-  if (loading) return <p>Loading bookings...</p>;
+  if (loading) return <LoadingSpinner/>
   return (
     <main className="min-h-screen bg-black text-white">
       <Navbar/>
