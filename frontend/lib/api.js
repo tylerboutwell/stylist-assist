@@ -1,7 +1,7 @@
 let isRefreshing = false;
 let refreshPromise = null;
 
-export const API_URL = process.env.NEXT_PUBLIC_API_URL;
+export const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000";
 
 export async function apiFetch(url, options = {}) {
   let accessToken = localStorage.getItem("accessToken");
