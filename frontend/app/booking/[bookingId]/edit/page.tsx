@@ -6,6 +6,7 @@ import {useParams, useRouter} from "next/navigation";
 import {ArrowLeft, Calendar, Clock, DollarSign, FileText, Scissors, User} from "lucide-react";
 import Navbar from "@/components/Navbar";
 import BookingForm from "@/app/booking/new/components/BookingForm";
+import LoadingSpinner from "@/components/LoadingSpinner";
 
 type Booking = {
   id: number;
@@ -45,7 +46,7 @@ export default function BookingDetail() {
   }, [bookingId]);
 
   if (loading) {
-    return <div className="p-6">Loading...</div>;
+    return <LoadingSpinner/>
   }
 
   if (error || !booking) {

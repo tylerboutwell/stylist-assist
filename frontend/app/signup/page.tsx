@@ -6,6 +6,7 @@ import AuthContext from "@/context/AuthContext";
 import Navbar from "@/components/Navbar";
 import Link from "next/link";
 import {API_URL} from "@/lib/api";
+import LoadingSpinner from "@/components/LoadingSpinner";
 
 export default function SignupPage() {
   const router = useRouter();
@@ -73,7 +74,7 @@ export default function SignupPage() {
     }
 
     if (authLoading) {
-    return null;
+    return <LoadingSpinner/>;
   }
 
   };

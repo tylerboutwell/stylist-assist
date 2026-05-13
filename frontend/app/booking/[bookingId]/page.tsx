@@ -5,6 +5,7 @@ import Link from "next/link";
 import {useParams, useRouter} from "next/navigation";
 import {Calendar, Clock, DollarSign, FileText, Scissors, User} from "lucide-react";
 import Navbar from "@/components/Navbar";
+import LoadingSpinner from "@/components/LoadingSpinner";
 
 type Booking = {
   id: number;
@@ -55,7 +56,7 @@ export default function BookingDetail() {
   }, [bookingId]);
 
   if (loading) {
-    return <div className="p-6">Loading...</div>;
+    return <LoadingSpinner/>
   }
 
   if (error || !booking) {

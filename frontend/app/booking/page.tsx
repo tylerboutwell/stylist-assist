@@ -13,6 +13,7 @@ import {API_URL, apiFetch} from "@/lib/api";
 import {useRouter} from "next/navigation";
 import AuthContext from "@/context/AuthContext";
 import Navbar from "@/components/Navbar";
+import LoadingSpinner from "@/components/LoadingSpinner";
 
 interface Booking {
   id: number;
@@ -46,7 +47,7 @@ export default function BookingPage() {
     getBookings();
   }, [user, authLoad]);
 
-  if (authLoad) return <p>Loading...</p>;
+  if (authLoad) return <LoadingSpinner/>
 
   if (!user) return null;
 

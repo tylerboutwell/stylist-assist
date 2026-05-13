@@ -1,7 +1,6 @@
 'use client';
 import Navbar from "@/components/Navbar";
 import Link from "next/link";
-import AuthContext from "@/context/AuthContext";
 
 export default function GetStartedPage() {
   return (
