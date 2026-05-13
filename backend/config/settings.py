@@ -52,7 +52,8 @@ MIDDLEWARE = [
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:3000",
     "https://stylist-assist.vercel.app",
-    "https://stylistassist.com"
+    "https://stylistassist.com",
+    "https://www.stylistassist.com",
 ]
 
 ROOT_URLCONF = 'config.urls'
@@ -125,7 +126,8 @@ STATIC_URL = 'static/'
 CSRF_TRUSTED_ORIGINS = [
     "http://localhost:3000",
     "https://stylist-assist.vercel.app",
-    "https://stylistassist.com"
+    "https://stylistassist.com",
+    "https://www.stylistassist.com",
 ]
 
 #JWT AUTHENTICATION
