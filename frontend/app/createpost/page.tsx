@@ -5,6 +5,7 @@ import Navbar from "@/components/Navbar";
 import {useRouter} from "next/navigation";
 import {API_URL, apiFetch} from "@/lib/api";
 import AuthContext from "@/context/AuthContext";
+import {ImagePlus} from "lucide-react";
 
 export default function CreatePostPage() {
   const [image, setImage] = useState<File | null>(null);
@@ -17,7 +18,7 @@ export default function CreatePostPage() {
 
   useEffect(() => {
     if (!user && !authLoad) {
-      router.push('/login')}
+      router.push('/get-started')}
   }, [user, authLoad, router])
 
   useEffect(() => {
@@ -69,59 +70,81 @@ export default function CreatePostPage() {
   };
 
   return (
-      <main className="min-h-screen bg-neutral-950 text-white">
+      <main className="min-h-screen">
         <Navbar/>
         <div className="flex flex-col items-center px-4">
           <h1 className="text-4xl font-bold mb-6 text-center">
             Generate a Social Media Post
           </h1>
 
-          <div className="w-full max-w-xl bg-neutral-900 rounded-2xl p-6 shadow-lg flex flex-col gap-6">
+          <div className="w-full max-w-xl bg-white rounded-2xl p-6 shadow-lg flex flex-col gap-6">
             {/* Image Upload */}
             <div className="flex flex-col items-center">
-              {image ? (
-                  <img
-                      src={URL.createObjectURL(image)}
-                      alt="Preview"
-                      className="w-64 h-64 object-cover rounded-lg mb-4 border border-neutral-700"
-                  />
-              ) : (
-                  <div
-                      className="w-64 h-64 flex items-center justify-center bg-neutral-800 rounded-lg border border-dashed border-neutral-700 text-neutral-400 mb-4">
-                    No image selected
-                  </div>
-              )}
+              <label
+                  htmlFor="image-upload"
+                  className="
+    w-64 h-64
+    border-2 border-dashed border-neutral-300
+    rounded-xl
+    flex flex-col items-center justify-center
+    cursor-pointer
+    bg-neutral-50
+    hover:bg-neutral-100
+    hover:border-rose-400
+    transition
+  "
+              >
+                {previewUrl ? (
+                    <img
+                        src={previewUrl}
+                        alt="Preview"
+                        className="w-full h-full object-cover rounded-xl"
+                    />
+                ) : (
+                    <>
+                      <ImagePlus size={48} className="text-neutral-400 mb-3"/>
+                      <p className="font-medium text-neutral-700">
+                        Click to upload
+                      </p>
+                      <p className="text-sm text-neutral-500">
+                        PNG or JPG
+                      </p>
+                    </>
+                )}
+              </label>
+
               <input
+                  id="image-upload"
                   type="file"
                   accept="image/*"
                   onChange={(e) => setImage(e.target.files?.[0] || null)}
-                  className="text-sm text-neutral-300"
+                  className="hidden"
               />
             </div>
 
             {/* Prompt Input */}
             <input
                 type="text"
-                placeholder="Optional: style, mood, hashtags..."
+                placeholder="Mention anything you'd like included"
                 value={prompt}
                 onChange={(e) => setPrompt(e.target.value)}
-                className="p-3 rounded bg-neutral-800 border border-neutral-700 text-white w-full"
+                className="p-3 rounded bg-neutral-50 border border-neutral-200 w-full"
             />
 
             {/* Generate Button */}
             <button
                 onClick={handleSubmit}
                 disabled={loading}
-                className="w-full p-3 rounded-xl bg-white text-black font-semibold hover:bg-neutral-200 transition"
+                className="w-full p-3 rounded-xl bg-rose-500 text-white hover:bg-rose-600 font-semibold transition"
             >
               {loading ? "Generating..." : "Generate Post"}
             </button>
 
             {/* AI Response */}
             {aiResponse && (
-                <div className="mt-4 p-4 bg-neutral-800 rounded-lg border border-neutral-700">
+                <div className="mt-4 p-4 rounded-lg bg-neutral-50 border border-neutral-200">
                   <h2 className="font-semibold mb-2 text-lg">AI Generated Caption</h2>
-                  <p className="whitespace-pre-wrap text-neutral-200">{aiResponse}</p>
+                  <p className="whitespace-pre-wrap">{aiResponse}</p>
                 </div>
             )}
           </div>

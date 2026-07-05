@@ -1,79 +1,105 @@
-
 import Navbar from "@/components/Navbar";
 import Link from "next/link";
 import WelcomeMessage from "@/components/WelcomeMessage";
-import {Suspense} from "react";
+import { Suspense } from "react";
 
 export default function Home() {
   return (
-      <main className="min-h-screen bg-neutral-950 text-white flex flex-col">
-          {/* use Navbar and WelcomeMessage from components */}
-          <Navbar/>
-          <Suspense fallback={null}>
-            <WelcomeMessage/>
-          </Suspense>
+      <main className="min-h-screen flex flex-col">
+        <Navbar/>
 
-          {/* HERO SECTION */}
-          <section className="flex flex-1 flex-col justify-center items-center text-center px-6">
-              <h2 className="text-4xl md:text-6xl font-bold max-w-3xl leading-tight">
-                  Your AI Assistant for Hair Stylists
-              </h2>
-              <p className="mt-6 text-neutral-400 max-w-xl text-lg">
-                  Create content, manage clients, and grow your brand — all in one place.
-              </p>
+        <Suspense fallback={null}>
+          <WelcomeMessage/>
+        </Suspense>
 
-              <div className="mt-8 mb-4 flex gap-4">
-                    <Link href="get-started/">
-                      <button className="cursor-pointer bg-white text-black px-6 py-3 rounded-xl font-medium hover:bg-neutral-200 transition">
-                          Get Started
-                      </button>
-                    </Link>
-                    <Link href="learn-more">
-                      <button className="cursor-pointer border border-neutral-700 px-6 py-3 rounded-xl hover:bg-neutral-900 transition">
-                          Learn More
-                      </button>
-                    </Link>
+        {/* HERO */}
+        <section className="flex flex-1 flex-col items-center justify-center text-center px-6 py-20">
+    <span className="mb-4 rounded-full bg-rose-100 text-rose-600 px-4 py-1 text-sm font-medium">
+      Built for Hair Stylists
+    </span>
+
+          <h1 className="max-w-4xl text-5xl md:text-6xl font-bold tracking-tight">
+            Stop Spending 30 Minutes
+            <br/>
+            Writing Instagram Captions.
+          </h1>
+
+          <p className="mt-6 max-w-2xl text-lg text-neutral-600">
+            Upload a photo or describe your client's transformation and let AI
+            generate engaging captions, hashtags, and hooks in seconds.
+          </p>
+
+          <div className="mt-10">
+            <Link href="/createpost">
+              <button
+                  className="rounded-xl bg-rose-500 px-8 py-4 text-lg font-semibold text-white transition hover:bg-rose-600 shadow-lg shadow-rose-500/20">
+                Generate Your First Caption →
+              </button>
+            </Link>
+          </div>
+        </section>
+
+        {/* EXAMPLE */}
+        <section className="border-t border-neutral-200 py-20 px-6">
+          <div className="mx-auto max-w-5xl">
+
+            <h2 className="text-3xl font-bold text-center">
+              See what StylistAssist creates
+            </h2>
+
+            <div className="mt-12 grid md:grid-cols-2 gap-8">
+
+              <div className="rounded-2xl border border-neutral-200 bg-white p-6">
+                <p className="font-semibold mb-3">
+                  📷 Input
+                </p>
+
+                <div className="rounded-xl bg-neutral-100 p-4 text-neutral-600">
+                  Fresh balayage with soft blonde highlights.
+                  Client wanted a natural, low-maintenance look.
+                </div>
               </div>
-          </section>
 
-          {/* FEATURES */}
-          <section className="px-8 py-16 border-t border-neutral-800">
-              <div className="max-w-6xl mx-auto grid md:grid-cols-3 gap-8">
-                  <Link href="/createpost" className="group">
-                      <div className="bg-neutral-900 p-6 rounded-2xl border border-transparent group-hover:border-neutral-700 transition-all duration-200 h-full">
-                          <h3 className="text-lg font-semibold group-hover:text-blue-400 transition-colors">Smart Captions</h3>
-                          <p className="text-neutral-400 mt-2 text-sm">
-                              Turn your work into viral content with AI-generated captions and trending hashtags.
-                          </p>
-                      </div>
-                  </Link>
+              <div className="rounded-2xl border border-neutral-200 bg-white p-6">
+                <p className="font-semibold mb-3">
+                  ✨ AI Caption
+                </p>
 
-                  <Link href='/booking' className='group'>
-                      <div className="bg-neutral-900 p-6 rounded-2xl border border-transparent group-hover:border-neutral-700 transition-all duration-200 h-full">
-                          <h3 className="text-lg font-semibold group-hover:text-blue-400 transition-colors">Booking & Records</h3>
-                          <p className="text-neutral-400 mt-2 text-sm">
-                              Seamlessly book clients and save their custom color formulas in one secure place.
-                          </p>
-                      </div>
-                  </Link>
-
-                  <div className="bg-neutral-900 p-6 rounded-2xl border border-transparent opacity-80 cursor-not-allowed">
-                      <div className="flex items-center gap-2">
-                          <h3 className="text-lg font-semibold">Digital Consults</h3>
-                          <span className="text-[10px] bg-blue-500/20 text-blue-400 px-2 py-0.5 rounded-full uppercase">Soon</span>
-                      </div>
-                      <p className="text-neutral-400 mt-2 text-sm">
-                          Send custom intake forms to new clients to save time and prevent surprises.
-                      </p>
-                  </div>
-
+                <p className="text-neutral-700 leading-7">
+                  Obsessed with this gorgeous dimensional blonde ✨
+                  We kept everything soft, bright, and easy to maintain.
+                  Perfect for anyone wanting a lived-in blonde that grows out beautifully.
+                  💛
+                  <br/><br/>
+                  #balayage #hairstylist #blondehair #hairtransformation
+                </p>
               </div>
-          </section>
 
-          {/* FOOTER */}
-          <footer className="text-center text-neutral-500 text-sm py-6 border-t border-neutral-800">
-              © {new Date().getFullYear()} StylistAssist
-          </footer>
+            </div>
+          </div>
+        </section>
+
+        {/* SIMPLE CTA */}
+        <section className="border-t border-neutral-200 py-20 text-center px-6">
+          <h2 className="text-3xl font-bold">
+            Ready to create your next post?
+          </h2>
+
+          <p className="mt-4 text-neutral-600">
+            Join stylists creating better content in seconds.
+          </p>
+
+          <Link href="/createpost">
+            <button
+                className="mt-8 rounded-xl bg-rose-500 px-8 py-4 text-white font-semibold hover:bg-rose-600 transition">
+              Get Started Free
+            </button>
+          </Link>
+        </section>
+
+        <footer className="border-t border-neutral-200 py-6 text-center text-sm text-neutral-500">
+          © {new Date().getFullYear()} StylistAssist
+        </footer>
       </main>
   );
 }

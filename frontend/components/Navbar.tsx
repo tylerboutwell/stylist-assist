@@ -10,11 +10,11 @@ export default function Navbar() {
     if (loading) return null;
 
   return (
-    <nav className="flex justify-between items-center px-8 py-4 border-b border-neutral-800 bg-neutral-950 text-white mb-8">
+    <nav className="flex justify-between items-center px-8 py-4 border-b border-neutral-200 mb-8">
       <Link href={"/"} className="text-xl font-semibold tracking-tight">
         StylistAssist
       </Link>
-      <div className="space-x-6 text-sm text-neutral-300">
+      <div className="space-x-6 text-sm">
         {user ? (
           <button
             onClick={() => {
@@ -22,14 +22,14 @@ export default function Navbar() {
               localStorage.removeItem("refreshToken");
               window.location.reload(); // quick refresh
             }}
-            className="hover:text-white transition cursor-pointer"
+            className="hover:text-rose-400 transition cursor-pointer"
           >
             Logout
           </button>
         ) : (
             <div className="flex gap-3">
-                <Link href="/signup" className="hover:text-white transition">Sign up </Link>
-                <Link href="/login" className="hover:text-white transition">Login</Link>
+                <Link href="/signup" className="hover:text-rose-400 transition">Sign up </Link>
+                <Link href="/login" className="hover:text-rose-400 transition">Login</Link>
             </div>
         )}
       </div>

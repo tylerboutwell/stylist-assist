@@ -27,12 +27,12 @@ export default function LoginPage() {
   };
 
   return (
-      <main className="min-h-screen bg-neutral-950 text-white flex flex-col">
+      <main className="min-h-screen flex flex-col">
         <Navbar/>
 
         {/* Center the login card */}
         <div className="flex flex-1 items-center justify-center px-4">
-          <div className="w-full max-w-md p-8 bg-neutral-900 rounded-xl">
+          <div className="w-full max-w-md p-8 bg-white border border-neutral-200 shadow-sm rounded-xl">
             <h2 className="text-2xl font-semibold mb-6 text-center">Login</h2>
 
             {error && (
@@ -47,7 +47,7 @@ export default function LoginPage() {
                   placeholder="Username"
                   value={username}
                   onChange={(e) => setUsername(e.target.value)}
-                  className="p-3 rounded bg-neutral-800 border border-neutral-700"
+                  className="p-3 rounded bg-neutral-50 border border-neutral-200"
                   required
               />
 
@@ -56,21 +56,21 @@ export default function LoginPage() {
                   placeholder="Password"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
-                  className="p-3 rounded bg-neutral-800 border border-neutral-700"
+                  className="p-3 rounded bg-neutral-50 border border-neutral-200"
                   required
               />
 
               <button
                   type="submit"
-                  className="p-3 rounded bg-white text-black font-medium hover:bg-neutral-200"
+                  className="p-3 rounded font-medium bg-rose-400 text-white hover:bg-rose-500"
                   disabled={loading}
               >
                 {loading ? "Logging in..." : "Login"}
               </button>
             </form>
 
-            <p className="text-center text-neutral-400 mt-4 text-sm">
-              Don’t have an account? <a href="/signup" className="underline text-white">Sign up</a>
+            <p className="text-center mt-4 text-sm">
+              Don’t have an account? <a href="/signup" className="underline hover:text-rose-500">Sign up</a>
             </p>
           </div>
         </div>
