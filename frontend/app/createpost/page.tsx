@@ -18,7 +18,7 @@ export default function CreatePostPage() {
 
   useEffect(() => {
     if (!user && !authLoad) {
-      router.push('/get-started')}
+      router.push('/')}
   }, [user, authLoad, router])
 
   useEffect(() => {

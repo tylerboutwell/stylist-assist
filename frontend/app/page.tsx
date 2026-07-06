@@ -14,9 +14,9 @@ export default function Home() {
 
         {/* HERO */}
         <section className="flex flex-1 flex-col items-center justify-center text-center px-6 py-20">
-    <span className="mb-4 rounded-full bg-rose-100 text-rose-600 px-4 py-1 text-sm font-medium">
-      Built for Hair Stylists
-    </span>
+        <span className="mb-4 rounded-full bg-rose-100 text-rose-600 px-4 py-1 text-sm font-medium">
+          Built for Hair Stylists
+        </span>
 
           <h1 className="max-w-4xl text-5xl md:text-6xl font-bold tracking-tight">
             Stop Spending 30 Minutes
@@ -55,8 +55,7 @@ export default function Home() {
                 </p>
 
                 <div className="rounded-xl bg-neutral-100 p-4 text-neutral-600">
-                  Fresh balayage with soft blonde highlights.
-                  Client wanted a natural, low-maintenance look.
+                  My client wanted to brighten her hair without making it high maintenance.
                 </div>
               </div>
 
@@ -65,11 +64,8 @@ export default function Home() {
                   ✨ AI Caption
                 </p>
 
-                <p className="text-neutral-700 leading-7">
-                  Obsessed with this gorgeous dimensional blonde ✨
-                  We kept everything soft, bright, and easy to maintain.
-                  Perfect for anyone wanting a lived-in blonde that grows out beautifully.
-                  💛
+                <p className="rounded-xl bg-neutral-100 p-4 text-neutral-600">
+                  A subtle refresh for summer ☀️ We brightened things up with soft balayage while keeping the grow-out natural and easy to maintain. Love how seamlessly everything blended together. Thanks for trusting me with your hair! 🤍
                   <br/><br/>
                   #balayage #hairstylist #blondehair #hairtransformation
                 </p>
@@ -91,7 +87,7 @@ export default function Home() {
 
           <Link href="/createpost">
             <button
-                className="mt-8 rounded-xl bg-rose-500 px-8 py-4 text-white font-semibold hover:bg-rose-600 transition">
+                className="mt-8 rounded-xl bg-rose-500 px-8 py-4 text-white font-semibold hover:bg-rose-600 transition shadow-sm">
               Get Started Free
             </button>
           </Link>
