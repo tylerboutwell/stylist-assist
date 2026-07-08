@@ -19,11 +19,14 @@ export default function WelcomeMessage() {
   if (!showMessage) return null;
 
   return (
-    <div className="fixed top-6 left-1/2 -translate-x-1/2 z-50">
-      <div className="bg-emerald-500/90 text-black px-5 py-3 rounded-2xl shadow-xl backdrop-blur-md border border-emerald-300/30 flex items-center gap-2">
-        <span className="text-lg">🎉</span>
-        <span className="font-medium">Account created successfully</span>
+      <div className="fixed top-6 left-1/2 -translate-x-1/2 z-50">
+        <div
+            className="bg-green-100 text-green-900 px-5 py-3 rounded-2xl shadow-md border border-green-200 flex items-center gap-2">
+          <span className="text-lg">🎉</span>
+          <span className="font-medium">
+        Welcome to StylistAssist! Create your first AI-powered post below.
+      </span>
+        </div>
       </div>
-    </div>
   );
 }

@@ -1,16 +1,27 @@
+'use client';
 import Navbar from "@/components/Navbar";
 import Link from "next/link";
-import WelcomeMessage from "@/components/WelcomeMessage";
-import { Suspense } from "react";
+import {useContext, useEffect} from "react";
+import AuthContext from "@/context/AuthContext";
+import {useRouter} from "next/navigation";
+
 
 export default function Home() {
+  const {user, loading: authLoad} = useContext(AuthContext)
+    const router = useRouter();
+
+  useEffect(() => {
+    if (user && !authLoad) {
+      router.push('/createpost')}
+  }, [user, authLoad, router])
+
+  if (user) {
+    return null
+  }
+
   return (
       <main className="min-h-screen flex flex-col">
         <Navbar/>
-
-        <Suspense fallback={null}>
-          <WelcomeMessage/>
-        </Suspense>
 
         {/* HERO */}
         <section className="flex flex-1 flex-col items-center justify-center text-center px-6 py-20">
@@ -30,7 +41,7 @@ export default function Home() {
           </p>
 
           <div className="mt-10">
-            <Link href="/createpost">
+            <Link href="/signup">
               <button
                   className="rounded-xl bg-rose-500 px-8 py-4 text-lg font-semibold text-white transition hover:bg-rose-600 shadow-lg shadow-rose-500/20">
                 Generate Your First Caption →
@@ -85,7 +96,7 @@ export default function Home() {
             Join stylists creating better content in seconds.
           </p>
 
-          <Link href="/createpost">
+          <Link href="/signup">
             <button
                 className="mt-8 rounded-xl bg-rose-500 px-8 py-4 text-white font-semibold hover:bg-rose-600 transition shadow-sm">
               Get Started Free

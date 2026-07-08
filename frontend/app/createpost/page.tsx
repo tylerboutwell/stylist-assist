@@ -1,11 +1,12 @@
 "use client";
 
-import {useContext, useEffect, useState} from "react";
+import {Suspense, useContext, useEffect, useState} from "react";
 import Navbar from "@/components/Navbar";
 import {useRouter} from "next/navigation";
 import {API_URL, apiFetch} from "@/lib/api";
 import AuthContext from "@/context/AuthContext";
 import {ImagePlus} from "lucide-react";
+import WelcomeMessage from "@/components/WelcomeMessage";
 
 export default function CreatePostPage() {
   const [image, setImage] = useState<File | null>(null);
@@ -72,6 +73,11 @@ export default function CreatePostPage() {
   return (
       <main className="min-h-screen">
         <Navbar/>
+
+        <Suspense fallback={null}>
+          <WelcomeMessage/>
+        </Suspense>
+
         <div className="flex flex-col items-center px-4">
           <h1 className="text-4xl font-bold mb-6 text-center">
             Generate a Social Media Post

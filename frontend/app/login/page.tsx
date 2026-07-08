@@ -20,7 +20,7 @@ export default function LoginPage() {
     const result = await login({ username, password });
 
     if (result.success) {
-      router.push("/");
+      router.push("/createpost");
     } else {
       setError(result.success || "Login failed");
     }
@@ -62,7 +62,7 @@ export default function LoginPage() {
 
               <button
                   type="submit"
-                  className="p-3 rounded font-medium bg-rose-400 text-white hover:bg-rose-500"
+                  className="p-3 rounded font-medium bg-rose-500 text-white hover:bg-rose-600"
                   disabled={loading}
               >
                 {loading ? "Logging in..." : "Login"}

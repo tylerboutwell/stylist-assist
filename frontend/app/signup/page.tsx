@@ -59,11 +59,10 @@ export default function SignupPage() {
         setError(data.detail || "Failed to create account");
         return;
       }
-      console.log("SUCCESSFULLY CREATED USER!")
 
       const result = await login({ username, password });
       if (result.success) {
-      router.push("/?welcome=true");
+      router.push("/createpost?welcome=true");
     } else {
       setError(result.success || "Login failed");
     }
@@ -138,7 +137,7 @@ export default function SignupPage() {
 
             <button
               type="submit"
-              className="p-3 rounded font-medium bg-rose-400 text-white hover:bg-rose-500 transition"
+              className="p-3 rounded font-medium bg-rose-500 text-white hover:bg-rose-600 transition"
               disabled={loading}
             >
               {loading ? "Creating account..." : "Create Account"}
