@@ -39,10 +39,11 @@ class RegisterView(APIView):
         return response.Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 class PostViewSet(viewsets.ModelViewSet):
-    queryset = Post.objects.all()
     serializer_class = PostSerializer
     permission_classes = [permissions.IsAuthenticated]
 
+    def get_queryset(self):
+        return Post.objects.filter(stylist=self.request.user)
 
     def perform_create(self, serializer):
         user = self.request.user
