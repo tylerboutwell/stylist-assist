@@ -47,7 +47,8 @@ class PostViewSet(viewsets.ModelViewSet):
 
     def perform_create(self, serializer):
         user = self.request.user
-        image = self.request.FILES.get("image")
+        image = serializer.validated_data['image']
+        image.seek(0)
         prompt = self.request.data.get("prompt")
         content_type = image.content_type  # e.g. "image/png", "image/jpeg"
         image_bytes = image.read()
