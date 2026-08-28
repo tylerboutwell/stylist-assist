@@ -33,14 +33,14 @@ class PostSerializer(serializers.ModelSerializer):
         fields = "__all__"
         read_only_fields = ["user"]
 
-        def validate_image(self, image):
-            content_type = getattr(image, "content_type", None)
-            if content_type not in ALLOWED_IMAGE_CONTENT_TYPES:
-                raise serializers.ValidationError(
-                    "Unsupported file type. Please upload a JPEG, PNG, or WEBP image."
-                )
-            if image.size > MAX_IMAGE_SIZE_BYTES:
-                raise serializers.ValidationError(
-                    f"Image too large. Max size is {MAX_IMAGE_SIZE_BYTES // (1024 * 1024)}MB."
-                )
-            return image
+    def validate_image(self, image):
+        content_type = getattr(image, "content_type", None)
+        if content_type not in ALLOWED_IMAGE_CONTENT_TYPES:
+            raise serializers.ValidationError(
+                "Unsupported file type. Please upload a JPEG, PNG, or WEBP image."
+            )
+        if image.size > MAX_IMAGE_SIZE_BYTES:
+            raise serializers.ValidationError(
+                f"Image too large. Max size is {MAX_IMAGE_SIZE_BYTES // (1024 * 1024)}MB."
+            )
+        return image
