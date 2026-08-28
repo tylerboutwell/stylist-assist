@@ -1,14 +1,22 @@
 "use client";
 
-import { createContext, useContext, useEffect, useState } from "react";
+import { createContext, useEffect, useState } from "react";
 import {API_URL, apiFetch} from "@/lib/api";
 
-const AuthContext = createContext({
+type LoginResult = { success: true } | { success: false; error: string };
+
+interface AuthContextType {
+  user: any;
+  loading: boolean;
+  login: (credentials: { username: string; password: string }) => Promise<LoginResult>;
+  logout: () => void;
+}
+
+
+const AuthContext = createContext<AuthContextType>({
   user: null,
   loading: true,
-  login: async (_: { username: string; password: string }) => ({
-    success: false,
-  }),
+  login: async () => ({ success: false, error: "" }),
   logout: () => {},
 });
 
@@ -43,7 +51,8 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
       setLoading(false);
     }
   };
-  const login = async (credentials: any) => {
+  const login = async (credentials: { username: string; password: string }):
+      Promise<LoginResult> => {
     setLoading(true);
     try {
       const res = await fetch(`${API_URL}/api/token/`, {

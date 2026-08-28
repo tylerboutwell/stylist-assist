@@ -22,7 +22,7 @@ export default function LoginPage() {
     if (result.success) {
       router.push("/createpost");
     } else {
-      setError(result.success || "Login failed");
+      setError(result.error || "Login failed");
     }
   };
 
