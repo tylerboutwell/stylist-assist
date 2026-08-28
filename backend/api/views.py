@@ -1,5 +1,4 @@
 from django.contrib.auth.models import User
-from openai._exceptions import OpenAIError
 from rest_framework import permissions, viewsets, response, status
 from rest_framework.decorators import action
 from rest_framework.exceptions import APIException
@@ -7,7 +6,7 @@ from rest_framework.views import APIView
 
 from .models import Post
 from .serializers import UserSerializer, PostSerializer, RegisterSerializer
-from openai import OpenAI
+from openai import OpenAI, OpenAIError
 from django.conf import settings
 client = OpenAI(api_key=settings.OPENAI_API_KEY)
 import base64
