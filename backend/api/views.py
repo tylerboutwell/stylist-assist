@@ -43,7 +43,7 @@ class PostViewSet(viewsets.ModelViewSet):
     permission_classes = [permissions.IsAuthenticated]
 
     def get_queryset(self):
-        return Post.objects.filter(stylist=self.request.user)
+        return Post.objects.filter(user=self.request.user)
 
     def perform_create(self, serializer):
         user = self.request.user
