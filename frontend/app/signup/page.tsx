@@ -52,9 +52,6 @@ export default function SignupPage() {
 
       const data = await res.json();
 
-      console.log("STATUS:", res.status);
-      console.log("RESPONSE:", data);
-
       if (!res.ok) {
         setError(data.detail || "Failed to create account");
         return;
@@ -64,7 +61,7 @@ export default function SignupPage() {
       if (result.success) {
       router.push("/createpost?welcome=true");
     } else {
-      setError(result.success || "Login failed");
+      setError(result.error || "Login failed");
     }
     } catch (err) {
       setError("Something went wrong");
@@ -72,11 +69,11 @@ export default function SignupPage() {
       setLoading(false);
     }
 
-    if (authLoading) {
-    return <LoadingSpinner/>;
-  }
 
   };
+  if (authLoading) {
+    return <LoadingSpinner/>;
+  }
 
   return (
     <main className="min-h-screen flex flex-col">
