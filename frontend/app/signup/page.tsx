@@ -1,22 +1,19 @@
 "use client";
 
-import {useContext, useEffect, useState} from "react";
+import { useContext, useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import AuthContext from "@/context/AuthContext";
-import Navbar from "@/components/Navbar";
 import Link from "next/link";
-import {API_URL} from "@/lib/api";
-import LoadingSpinner from "@/components/LoadingSpinner";
+import AuthContext from "@/context/AuthContext";
+import AuthShell from "@/components/AuthShell";
+import { API_URL } from "@/lib/api";
 
 export default function SignupPage() {
   const router = useRouter();
-
-  const {login, user, loading:authLoading} = useContext(AuthContext)
+  const { login, user, loading: authLoading } = useContext(AuthContext);
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
-
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
 
@@ -25,6 +22,10 @@ export default function SignupPage() {
       router.replace("/");
     }
   }, [user, authLoading, router]);
+
+  if (authLoading || user) {
+    return null;
+  }
 
   const handleSignup = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -40,14 +41,8 @@ export default function SignupPage() {
 
       const res = await fetch(`${API_URL}/register/`, {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          username,
-          email,
-          password,
-        }),
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ username, email, password }),
       });
 
       const data = await res.json();
@@ -59,96 +54,106 @@ export default function SignupPage() {
 
       const result = await login({ username, password });
       if (result.success) {
-      router.push("/createpost?welcome=true");
-    } else {
-      setError(result.error || "Login failed");
-    }
+        router.push("/createpost?welcome=true");
+      } else {
+        setError(result.error || "Login failed");
+      }
     } catch (err) {
       setError("Something went wrong");
     } finally {
       setLoading(false);
     }
-
-
   };
-  if (authLoading) {
-    return <LoadingSpinner/>;
-  }
 
   return (
-    <main className="min-h-screen flex flex-col">
-      <Navbar />
-
-      <div className="flex flex-1 items-center justify-center px-4">
-        <div className="w-full max-w-md p-8 rounded-xl bg-white border border-neutral-200 shadow-sm">
-          <h2 className="text-2xl font-semibold mb-2 text-center">
-            Create your account
-          </h2>
-
-          <p className="text-neutral-600 text-sm text-center mb-6">
-            Start managing clients, bookings, and content with StylistAssist.
-          </p>
-
-          {error && (
-            <div className="bg-red-600 p-2 rounded mb-4 text-center text-sm">
-              {error}
-            </div>
-          )}
-
-          <form className="flex flex-col gap-4" onSubmit={handleSignup}>
-            <input
-              type="text"
-              placeholder="Username"
-              value={username}
-              onChange={(e) => setUsername(e.target.value)}
-              className="p-3 rounded bg-neutral-50 border border-neutral-200"
-              required
-            />
-
-            <input
-              type="email"
-              placeholder="Email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              className="p-3 rounded bg-neutral-50 border border-neutral-200"
-              required
-            />
-
-            <input
-              type="password"
-              placeholder="Password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              className="p-3 rounded bg-neutral-50 border border-neutral-200"
-              required
-            />
-
-            <input
-              type="password"
-              placeholder="Confirm Password"
-              value={confirmPassword}
-              onChange={(e) => setConfirmPassword(e.target.value)}
-              className="p-3 rounded bg-neutral-50 border border-neutral-200"
-              required
-            />
-
-            <button
-              type="submit"
-              className="p-3 rounded font-medium bg-rose-500 text-white hover:bg-rose-600 transition"
-              disabled={loading}
-            >
-              {loading ? "Creating account..." : "Create Account"}
-            </button>
-          </form>
-
-          <p className="text-center mt-6 text-sm">
-            Already have an account?{" "}
-            <Link href="/login" className="underline hover:text-rose-500">
-              Login
-            </Link>
-          </p>
+    <AuthShell
+      eyebrow="Get started"
+      title="Create your account"
+      subtitle="Start managing clients, bookings, and content with StylistAssist."
+      footer={
+        <>
+          Already have an account?{" "}
+          <Link href="/login" className="font-medium text-rose-500 hover:text-rose-600">
+            Log in
+          </Link>
+        </>
+      }
+    >
+      {error && (
+        <div className="mb-4 rounded-lg border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700">
+          {error}
         </div>
-      </div>
-    </main>
+      )}
+
+      <form className="flex flex-col gap-4" onSubmit={handleSignup}>
+        <div>
+          <label htmlFor="username" className="mb-1.5 block text-sm font-medium text-neutral-700">
+            Username
+          </label>
+          <input
+            id="username"
+            type="text"
+            placeholder="yourstudio"
+            value={username}
+            onChange={(e) => setUsername(e.target.value)}
+            className="w-full rounded-xl border border-neutral-200 bg-neutral-50 px-4 py-3 text-[15px] text-neutral-900 outline-none transition focus:border-rose-400 focus:bg-white focus:ring-4 focus:ring-rose-500/10"
+            required
+          />
+        </div>
+
+        <div>
+          <label htmlFor="email" className="mb-1.5 block text-sm font-medium text-neutral-700">
+            Email
+          </label>
+          <input
+            id="email"
+            type="email"
+            placeholder="you@yourstudio.com"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            className="w-full rounded-xl border border-neutral-200 bg-neutral-50 px-4 py-3 text-[15px] text-neutral-900 outline-none transition focus:border-rose-400 focus:bg-white focus:ring-4 focus:ring-rose-500/10"
+            required
+          />
+        </div>
+
+        <div>
+          <label htmlFor="password" className="mb-1.5 block text-sm font-medium text-neutral-700">
+            Password
+          </label>
+          <input
+            id="password"
+            type="password"
+            placeholder="••••••••"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            className="w-full rounded-xl border border-neutral-200 bg-neutral-50 px-4 py-3 text-[15px] text-neutral-900 outline-none transition focus:border-rose-400 focus:bg-white focus:ring-4 focus:ring-rose-500/10"
+            required
+          />
+        </div>
+
+        <div>
+          <label htmlFor="confirmPassword" className="mb-1.5 block text-sm font-medium text-neutral-700">
+            Confirm password
+          </label>
+          <input
+            id="confirmPassword"
+            type="password"
+            placeholder="••••••••"
+            value={confirmPassword}
+            onChange={(e) => setConfirmPassword(e.target.value)}
+            className="w-full rounded-xl border border-neutral-200 bg-neutral-50 px-4 py-3 text-[15px] text-neutral-900 outline-none transition focus:border-rose-400 focus:bg-white focus:ring-4 focus:ring-rose-500/10"
+            required
+          />
+        </div>
+
+        <button
+          type="submit"
+          disabled={loading}
+          className="mt-2 flex items-center justify-center rounded-xl bg-rose-500 px-4 py-3.5 text-sm font-semibold text-white shadow-sm transition hover:bg-rose-600 active:scale-[0.98] disabled:cursor-not-allowed disabled:opacity-60"
+        >
+          {loading ? "Creating account…" : "Create account"}
+        </button>
+      </form>
+    </AuthShell>
   );
 }

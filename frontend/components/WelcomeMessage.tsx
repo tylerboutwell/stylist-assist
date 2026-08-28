@@ -10,7 +10,6 @@ export default function WelcomeMessage() {
   useEffect(() => {
     if (searchParams.get("welcome") === "true") {
       setShowMessage(true);
-
       const timer = setTimeout(() => setShowMessage(false), 4000);
       return () => clearTimeout(timer);
     }
@@ -19,14 +18,13 @@ export default function WelcomeMessage() {
   if (!showMessage) return null;
 
   return (
-      <div className="fixed top-6 left-1/2 -translate-x-1/2 z-50">
-        <div
-            className="bg-green-100 text-green-900 px-5 py-3 rounded-2xl shadow-md border border-green-200 flex items-center gap-2">
-          <span className="text-lg">🎉</span>
-          <span className="font-medium">
-        Welcome to StylistAssist! Create your first AI-powered post below.
-      </span>
-        </div>
+    <div className="fixed left-1/2 top-20 z-50 w-[calc(100%-2rem)] max-w-sm -translate-x-1/2 sm:top-24 sm:w-auto">
+      <div className="flex items-center gap-2.5 rounded-2xl border border-rose-200 bg-white px-5 py-3 shadow-lg shadow-neutral-900/10">
+        <span className="text-lg">✨</span>
+        <span className="text-sm font-medium text-neutral-800">
+          Welcome to StylistAssist! Create your first AI-powered post below.
+        </span>
       </div>
+    </div>
   );
 }
