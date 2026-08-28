@@ -1,6 +1,8 @@
 from django.contrib.auth.models import User
+from openai._exceptions import OpenAIError
 from rest_framework import permissions, viewsets, response, status
 from rest_framework.decorators import action
+from rest_framework.exceptions import APIException
 from rest_framework.views import APIView
 
 from .models import Post
@@ -113,7 +115,8 @@ class PostViewSet(viewsets.ModelViewSet):
                 },
             )
 
-        response = client.responses.create(
+        try:
+            ai_response = client.responses.create(
             model="gpt-5.4-mini",
             input=[
                 {
@@ -131,8 +134,10 @@ class PostViewSet(viewsets.ModelViewSet):
                 }
             ],
         )
+        except OpenAIError:
+            raise APIException("AI caption generation failed. Please try again.")
 
-        text = response.output_text
+        text = ai_response.output_text
 
         hashtags = "#example #tags"
 
