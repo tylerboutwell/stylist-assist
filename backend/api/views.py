@@ -10,6 +10,9 @@ from openai import OpenAI, OpenAIError
 from django.conf import settings
 client = OpenAI(api_key=settings.OPENAI_API_KEY)
 import base64
+import logging
+
+logger = logging.getLogger(__name__)
 
 
 class UserViewSet(viewsets.ModelViewSet):
@@ -133,7 +136,8 @@ class PostViewSet(viewsets.ModelViewSet):
                 }
             ],
         )
-        except OpenAIError:
+        except OpenAIError as e:
+            logger.exception("OpenAI caption generation failed: %s", e)
             raise APIException("AI caption generation failed. Please try again.")
 
         text = ai_response.output_text
