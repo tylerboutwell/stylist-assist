@@ -6,17 +6,10 @@ from rest_framework_simplejwt.views import (
     TokenRefreshView,
 )
 from api import views
-from bookings import views as bookings_views
-from api.models import Post
-from bookings.models import Service, Booking
 
 router = routers.DefaultRouter()
 router.register(r"users", views.UserViewSet, basename="users")
 router.register(r"posts", views.PostViewSet, basename="posts")
-booking_router = routers.DefaultRouter()
-booking_router.register(r"bookings", bookings_views.BookingViewSet, basename="booking")
-booking_router.register(r"clients", bookings_views.ClientViewSet, basename="client")
-booking_router.register(r"services", bookings_views.ServiceViewSet, basename="service")
 
 # Wire up our API using automatic URL routing.
 # Additionally, we include login URLs for the browsable API.
@@ -27,5 +20,4 @@ urlpatterns = [
     path("api-auth/", include("rest_framework.urls", namespace="rest_framework")),
     path('api/token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
     path('api/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
-    path('booking/', include(booking_router.urls)),
 ]
