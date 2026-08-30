@@ -24,7 +24,7 @@ class RegisterSerializer(serializers.ModelSerializer):
         )
         return user
 
-ALLOWED_IMAGE_CONTENT_TYPES = {"image/jpeg", "image/png", "image/webp"}
+ALLOWED_IMAGE_CONTENT_TYPES = {"image/jpeg", "image/png", "image/webp", "image/mpo"}
 MAX_IMAGE_SIZE_BYTES = 8 * 1024 * 1024  # 8MB
 
 class PostSerializer(serializers.ModelSerializer):
@@ -37,7 +37,7 @@ class PostSerializer(serializers.ModelSerializer):
         content_type = getattr(image, "content_type", None)
         if content_type not in ALLOWED_IMAGE_CONTENT_TYPES:
             raise serializers.ValidationError(
-                "Unsupported file type. Please upload a JPEG, PNG, or WEBP image."
+                "Unsupported file type. Please upload a JPEG, PNG, MPO, or WEBP image."
             )
         if image.size > MAX_IMAGE_SIZE_BYTES:
             raise serializers.ValidationError(

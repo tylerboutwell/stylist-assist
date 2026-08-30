@@ -50,6 +50,7 @@ class PostViewSet(viewsets.ModelViewSet):
         return Post.objects.filter(user=self.request.user)
 
     def perform_create(self, serializer):
+        print("PERFORM_CREATE REACHED")
         user = self.request.user
         image = serializer.validated_data['image']
         image.seek(0)
@@ -136,8 +137,8 @@ class PostViewSet(viewsets.ModelViewSet):
                 }
             ],
         )
-        except OpenAIError as e:
-            logger.exception("OpenAI caption generation failed: %s", e)
+        except Exception as e:
+            logger.exception("AI caption generation failed")
             raise APIException("AI caption generation failed. Please try again.")
 
         text = ai_response.output_text
