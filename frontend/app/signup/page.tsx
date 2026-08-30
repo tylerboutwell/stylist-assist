@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 import Link from "next/link";
 import AuthContext from "@/context/AuthContext";
 import AuthShell from "@/components/AuthShell";
-import { API_URL } from "@/lib/api";
+import {API_URL, parseApiError} from "@/lib/api";
 
 export default function SignupPage() {
   const router = useRouter();
@@ -48,7 +48,7 @@ export default function SignupPage() {
       const data = await res.json();
 
       if (!res.ok) {
-        setError(data.detail || "Failed to create account");
+        setError(parseApiError(data, "Failed to create account"));
         return;
       }
 

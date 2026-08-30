@@ -3,6 +3,26 @@ let refreshPromise = null;
 
 export const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000";
 
+// DRF error responses come in two different shapes depending on the endpoint:
+//   { detail: "some message" }                          — e.g. SimpleJWT's token endpoint
+//   { fieldName: ["message one", "message two"], ... }   — e.g. serializer.errors,
+//                                                            returned as-is by RegisterView
+// This normalizes either shape into one readable string for display.
+export function parseApiError(data, fallback = "Something went wrong") {
+  if (!data || typeof data !== "object") return fallback;
+  if (typeof data.detail === "string") return data.detail;
+
+  const messages = [];
+  for (const value of Object.values(data)) {
+    if (Array.isArray(value)) {
+      messages.push(...value.filter((m) => typeof m === "string"));
+    } else if (typeof value === "string") {
+      messages.push(value);
+    }
+  }
+  return messages.length > 0 ? messages.join(" ") : fallback;
+}
+
 export async function apiFetch(url, options = {}) {
   let accessToken = localStorage.getItem("accessToken");
 
